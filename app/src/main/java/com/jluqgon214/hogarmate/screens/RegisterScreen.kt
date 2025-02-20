@@ -1,6 +1,5 @@
 package com.jluqgon214.hogarmate.screens
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -12,7 +11,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
@@ -21,14 +22,17 @@ import androidx.navigation.NavController
 import com.jluqgon214.hogarmate.components.CustomButton
 import com.jluqgon214.hogarmate.components.CustomTextField
 import com.jluqgon214.hogarmate.ui.theme.GreenPrimary
-import com.jluqgon214.hogarmate.viewModel.LoginViewModel
+import com.jluqgon214.hogarmate.viewModel.RegisterViewModel
 
 @Composable
-fun LoginScreen(viewModel: LoginViewModel, navController: NavController) {
+fun RegisterScreen(viewModel: RegisterViewModel, navController: NavController) {
     val username by viewModel.username.collectAsState()
+    val email by viewModel.email.collectAsState()
     val password by viewModel.password.collectAsState()
-    val loginResponse by viewModel.loginResponse.collectAsState()
+    val repeatPassword by viewModel.passwordRepeat.collectAsState()
+    val registerResponse by viewModel.registerResponse.collectAsState()
     val errorMessage by viewModel.errorMessage.collectAsState()
+
 
     Box(
         modifier = Modifier
@@ -36,7 +40,7 @@ fun LoginScreen(viewModel: LoginViewModel, navController: NavController) {
             .background(GreenPrimary)
             .systemBarsPadding(),
     ) {
-        Text("Iniciar Sesión", textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.titleLarge)
+        Text("Registrarse", textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.titleLarge)
     }
 
     Column(
@@ -53,40 +57,44 @@ fun LoginScreen(viewModel: LoginViewModel, navController: NavController) {
             placeholder = "Escribe tu usuario"
         )
         CustomTextField(
+            value = email,
+            onValueChange = { viewModel.setEmail(it) },
+            label = "Email",
+            placeholder = "Escribe tu Email"
+        )
+        CustomTextField(
             value = password,
             onValueChange = { viewModel.setPassword(it) },
             label = "Contraseña",
             placeholder = "Escribe tu contraseña"
         )
+        CustomTextField(
+            value = repeatPassword,
+            onValueChange = { viewModel.setRepeatPassword(it) },
+            label = "Repite tu Contraseña",
+            placeholder = "Escribe tu contraseña de nuevo"
+        )
         Row() {
             CustomButton(
-                text = "Iniciar sesión",
+                text = "Volver",
                 onClick = {
-                    viewModel.login()
-                    Log.d("LoginScreen", "Login button clicked")
-                    Log.d("Username", username)
-                    Log.d("Password", password)
-                    Log.d("LoginResponse", loginResponse.toString())
-                    Log.d("Error", errorMessage.toString())
+                    navController.navigate("loginScreen")
                 }
             )
             CustomButton(
                 text = "Registrarse",
                 onClick = {
-                    navController.navigate("registerScreen")
-                    Log.d("LoginScreen", "Register button clicked")
-                    Log.d("Username", username)
-                    Log.d("Password", password)
-                    Log.d("LoginResponse", loginResponse.toString())
-                    Log.d("Error", errorMessage.toString())
+                    viewModel.register()
                 }
             )
         }
-        loginResponse?.let {
-            Text("Login successful: ${it.token}")
+        registerResponse?.let {
+            Text("Registro successful: ${it.message}")
+            navController.navigate("loginScreen")
         }
         errorMessage?.let {
-            Text("Error: $it")
+            Text("Error: $it, mensaje: ${registerResponse?.message}")
         }
     }
+
 }

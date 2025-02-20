@@ -11,7 +11,7 @@ import com.jluqgon214.hogarmate.ui.theme.GreenSecondary
 @Composable
 fun CustomButton(onClick: () -> Unit, text: String) {
     Button(
-        onClick = { onClick },
+        onClick = { onClick() },
         colors = ButtonDefaults.buttonColors(
             containerColor = GreenPrimary,
             contentColor = Color.White
