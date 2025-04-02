@@ -1,43 +1,39 @@
 package com.jluqgon214.hogarmate.screens
 
-import android.util.Log
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.systemBarsPadding
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.jluqgon214.hogarmate.components.CustomButton
 import com.jluqgon214.hogarmate.components.CustomTextField
-import com.jluqgon214.hogarmate.ui.theme.GreenPrimary
+import com.jluqgon214.hogarmate.components.TopTittle
+import com.jluqgon214.hogarmate.ui.theme.messageError
 import com.jluqgon214.hogarmate.viewModel.LoginViewModel
 
 @Composable
-fun LoginScreen(viewModel: LoginViewModel, navController: NavController) {
-    val username by viewModel.username.collectAsState()
-    val password by viewModel.password.collectAsState()
-    val loginResponse by viewModel.loginResponse.collectAsState()
-    val errorMessage by viewModel.errorMessage.collectAsState()
+fun LoginScreen(loginViewModel: LoginViewModel, navController: NavController) {
+    val email by loginViewModel.email.collectAsState()
+    val password by loginViewModel.password.collectAsState()
+    val loginResponse by loginViewModel.loginResponse.collectAsState()
+    val errorMessage by loginViewModel.errorMessage.collectAsState()
+    val loginCorrecto by loginViewModel.loginCorrecto.collectAsState()
+    val isLoading by loginViewModel.isLoading.collectAsState()
 
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(GreenPrimary)
-            .systemBarsPadding(),
-    ) {
-        Text("Iniciar Sesión", textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.titleLarge)
-    }
+    TopTittle("Iniciar sesión")
 
     Column(
         modifier = Modifier
@@ -46,47 +42,70 @@ fun LoginScreen(viewModel: LoginViewModel, navController: NavController) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+
+        loginResponse?.let {
+            Text("${it.token}")
+        }
+        errorMessage?.let {
+            Text(it, color = messageError)
+        }
         CustomTextField(
-            value = username,
-            onValueChange = { viewModel.setUsername(it) },
-            label = "Usuario",
-            placeholder = "Escribe tu usuario"
+            value = email,
+            onValueChange = { loginViewModel.setEmail(it) },
+            label = "Correo Electrónico",
+            placeholder = "Escribe tu correo"
         )
         CustomTextField(
             value = password,
-            onValueChange = { viewModel.setPassword(it) },
+            onValueChange = { loginViewModel.setPassword(it) },
             label = "Contraseña",
             placeholder = "Escribe tu contraseña"
         )
-        Row() {
+        Row(
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
             CustomButton(
-                text = "Iniciar sesión",
                 onClick = {
-                    viewModel.login()
-                    Log.d("LoginScreen", "Login button clicked")
-                    Log.d("Username", username)
-                    Log.d("Password", password)
-                    Log.d("LoginResponse", loginResponse.toString())
-                    Log.d("Error", errorMessage.toString())
+                    // Reseteamos el mensaje de error para que se actualice
+                    loginViewModel.setErrorMessage(null)
+
+                    loginViewModel.login()
+                },
+                content = {
+                    if (isLoading) {
+                        CircularProgressIndicator(
+                            color = Color.White,
+                        )
+                    } else {
+                        Text("Iniciar sesión")
+                    }
                 }
             )
             CustomButton(
-                text = "Registrarse",
                 onClick = {
                     navController.navigate("registerScreen")
-                    Log.d("LoginScreen", "Register button clicked")
-                    Log.d("Username", username)
-                    Log.d("Password", password)
-                    Log.d("LoginResponse", loginResponse.toString())
-                    Log.d("Error", errorMessage.toString())
+                },
+                content = {
+                    Text("Registrarse")
                 }
             )
         }
-        loginResponse?.let {
-            Text("Login successful: ${it.token}")
-        }
-        errorMessage?.let {
-            Text("Error: $it")
+    }
+
+    // Observa los cambios en loginCorrecto y navega si es true
+    LaunchedEffect(loginCorrecto) {
+        if (loginCorrecto) {
+            // Guardamos el JWT en una variable para usarlo más tarde
+            loginViewModel.setJWT(loginViewModel.loginResponse.value?.token)
+
+            // Borrar el trazo de navegación para que no se pueda volver acceder a la pantalla de inicio de sesión a no ser que se cierre la sesión
+            navController.popBackStack()
+
+            // Navegar a la pantalla de inicio
+            navController.navigate("homeScreen")
         }
     }
 }

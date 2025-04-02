@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.jluqgon214.hogarmate.screens.HomeScreen
 import com.jluqgon214.hogarmate.screens.LoginScreen
 import com.jluqgon214.hogarmate.screens.RegisterScreen
 import com.jluqgon214.hogarmate.viewModel.LoginViewModel
@@ -21,10 +22,13 @@ fun AppNavigation() {
     Scaffold {
         NavHost(navController, startDestination = "loginScreen") {
             composable("loginScreen") {
-                LoginScreen(viewModel = loginViewModel, navController = navController)
+                LoginScreen(loginViewModel = loginViewModel, navController = navController)
             }
             composable("registerScreen") {
-                RegisterScreen(viewModel = registerViewModel, navController = navController)
+                RegisterScreen(registerViewModel = registerViewModel, navController = navController)
+            }
+            composable("homeScreen") {
+                HomeScreen()
             }
         }
     }

@@ -11,6 +11,7 @@ val GreenTertiary = Color(0xFFA5D6A7) // Verde suave - RGB(165, 214, 167)
 val OrangeAccent = Color(0xFFFFA726) // Naranja vibrante
 val BlueAccent = Color(0xFF42A5F5) // Azul brillante
 val YellowAccent = Color(0xFFFFEB3B) // Amarillo luminoso
+val messageError = Color(0xFFF44336) // Rojo
 
 // Colores para el modo claro
 val LightBackground = Color(0xFFFFF3E0) // Fondo cálido

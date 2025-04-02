@@ -14,8 +14,8 @@ import retrofit2.Response
 class LoginViewModel : ViewModel() {
     private val repository = LoginRepository()
 
-    private val _username = MutableStateFlow("")
-    val username: StateFlow<String> = _username
+    private val _email = MutableStateFlow("")
+    val email: StateFlow<String> = _email
 
     private val _password = MutableStateFlow("")
     val password: StateFlow<String> = _password
@@ -26,22 +26,46 @@ class LoginViewModel : ViewModel() {
     private val _errorMessage = MutableStateFlow<String?>(null)
     val errorMessage: StateFlow<String?> = _errorMessage
 
-    fun setUsername(username: String) {
-        _username.value = username
+    private val _JWT = MutableStateFlow<String?>(null)
+    val JWT: StateFlow<String?> = _JWT
+
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading: StateFlow<Boolean> = _isLoading
+
+    private val _loginCorrecto = MutableStateFlow<Boolean>(false)
+    val loginCorrecto: StateFlow<Boolean> = _loginCorrecto
+
+    fun setLoginCorrecto(value: Boolean) {
+        _loginCorrecto.value = value
+    }
+
+    fun setEmail(email: String) {
+        _email.value = email
     }
 
     fun setPassword(password: String) {
         _password.value = password
     }
 
+    fun setErrorMessage(message: String?) {
+        _errorMessage.value = message
+    }
+
+    fun setJWT(jwt: String?) {
+        _JWT.value = jwt
+    }
+
+
     fun login() {
         viewModelScope.launch {
+            _isLoading.value = true
             try {
-                val response: Response<LoginResponse> = repository.login(_username.value, _password.value)
+                val response: Response<LoginResponse> =
+                    repository.login(_email.value, _password.value)
                 if (response.isSuccessful) {
                     _loginResponse.value = response.body()
+                    setLoginCorrecto(true)
                 } else {
-                    // Obtener el contenido del error y parsearlo
                     val errorJson = response.errorBody()?.string()
                     errorJson?.let {
                         try {
@@ -52,11 +76,13 @@ class LoginViewModel : ViewModel() {
                             _errorMessage.value = it
                         }
                     } ?: run {
-                        _errorMessage.value = "Login failed"
+                        _errorMessage.value = "Inicio de sesión fallido"
                     }
                 }
             } catch (e: Exception) {
                 _errorMessage.value = "Request failed: ${e.message}"
+            } finally {
+                _isLoading.value = false
             }
         }
     }
