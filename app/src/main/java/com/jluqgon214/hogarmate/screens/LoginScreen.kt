@@ -32,9 +32,6 @@ fun LoginScreen(loginViewModel: LoginViewModel, navController: NavController) {
     val errorMessage by loginViewModel.errorMessage.collectAsState()
     val loginCorrecto by loginViewModel.loginCorrecto.collectAsState()
     val isLoading by loginViewModel.isLoading.collectAsState()
-
-    TopTittle("Iniciar sesión")
-
     Column(
         modifier = Modifier
             .padding(16.dp)
@@ -77,7 +74,7 @@ fun LoginScreen(loginViewModel: LoginViewModel, navController: NavController) {
                 content = {
                     if (isLoading) {
                         CircularProgressIndicator(
-                            color = Color.White,
+                            color = Color.White
                         )
                     } else {
                         Text("Iniciar sesión")

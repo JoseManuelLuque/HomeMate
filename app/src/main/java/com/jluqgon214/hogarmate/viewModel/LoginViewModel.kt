@@ -26,8 +26,6 @@ class LoginViewModel : ViewModel() {
     private val _errorMessage = MutableStateFlow<String?>(null)
     val errorMessage: StateFlow<String?> = _errorMessage
 
-    private val _JWT = MutableStateFlow<String?>(null)
-    val JWT: StateFlow<String?> = _JWT
 
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading
@@ -51,10 +49,18 @@ class LoginViewModel : ViewModel() {
         _errorMessage.value = message
     }
 
+    companion object {
+        private val _JWT = MutableStateFlow<String?>(null)
+        val JWT: StateFlow<String?> = _JWT
+
+        fun getJWT(): String? {
+            return _JWT.value
+        }
+    }
+
     fun setJWT(jwt: String?) {
         _JWT.value = jwt
     }
-
 
     fun login() {
         viewModelScope.launch {
@@ -64,6 +70,7 @@ class LoginViewModel : ViewModel() {
                     repository.login(_email.value, _password.value)
                 if (response.isSuccessful) {
                     _loginResponse.value = response.body()
+                    setJWT(response.body()?.token) // Guarda el token JWT
                     setLoginCorrecto(true)
                 } else {
                     val errorJson = response.errorBody()?.string()

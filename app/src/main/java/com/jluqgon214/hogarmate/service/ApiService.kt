@@ -4,6 +4,7 @@ import com.jluqgon214.hogarmate.model.LoginRequest
 import com.jluqgon214.hogarmate.model.LoginResponse
 import com.jluqgon214.hogarmate.model.RegisterRequest
 import com.jluqgon214.hogarmate.model.RegisterResponse
+import com.jluqgon214.hogarmate.model.Tarea
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -17,5 +18,5 @@ interface ApiService {
     fun register(@Body request: RegisterRequest): Call<RegisterResponse>
 
     @GET("/tareas/usuario")
-    fun obteenerTareasUsuario()
-}                               
+    fun obtenerTareasUsuario(): Call<List<Tarea>>
+}
