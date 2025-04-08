@@ -51,6 +51,9 @@ dependencies {
     // Navegación
     implementation("androidx.navigation:navigation-compose:2.7.3")
 
+    // Animated Bottom Bar
+    implementation("com.exyte:animated-navigation-bar:1.0.0")
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
