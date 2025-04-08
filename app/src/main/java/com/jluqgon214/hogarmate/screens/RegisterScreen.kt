@@ -28,9 +28,6 @@ fun RegisterScreen(registerViewModel: RegisterViewModel, navController: NavContr
     val registerResponse by registerViewModel.registerResponse.collectAsState()
     val errorMessage by registerViewModel.errorMessage.collectAsState()
 
-
-    TopTittle("Registrarse")
-
     Column(
         modifier = Modifier
             .padding(16.dp)
