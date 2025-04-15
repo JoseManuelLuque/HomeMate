@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,7 +19,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.jluqgon214.hogarmate.components.CustomButton
 import com.jluqgon214.hogarmate.components.CustomTextField
-import com.jluqgon214.hogarmate.components.TopTittle
 import com.jluqgon214.hogarmate.ui.theme.messageError
 import com.jluqgon214.hogarmate.viewModel.LoginViewModel
 
@@ -40,9 +38,6 @@ fun LoginScreen(loginViewModel: LoginViewModel, navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        loginResponse?.let {
-            Text("${it.token}")
-        }
         errorMessage?.let {
             Text(it, color = messageError)
         }

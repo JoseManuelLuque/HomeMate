@@ -10,6 +10,7 @@ import kotlinx.coroutines.launch
 import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.Response
+import java.net.SocketTimeoutException
 
 class RegisterViewModel : ViewModel() {
     private val repository = RegisterRepository()
@@ -80,6 +81,8 @@ class RegisterViewModel : ViewModel() {
                         _errorMessage.value = "Error desconocido"
                     }
                 }
+            } catch (e: SocketTimeoutException) {
+                _errorMessage.value = "Comprueba tu conexión a Internet"
             } catch (e: Exception) {
                 _errorMessage.value = "Request failed: ${e.message}"
             }

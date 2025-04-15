@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
 }
 
+
 android {
     namespace = "com.jluqgon214.hogarmate"
     compileSdk = 35
@@ -53,6 +54,10 @@ dependencies {
 
     // Animated Bottom Bar
     implementation("com.exyte:animated-navigation-bar:1.0.0")
+
+    // DataStore
+    implementation("androidx.datastore:datastore-preferences:1.1.4")
+    implementation("androidx.datastore:datastore-core:1.1.4")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
