@@ -20,6 +20,7 @@ import com.jluqgon214.hogarmate.screens.ProfileScreen
 import com.jluqgon214.hogarmate.screens.RegisterScreen
 import com.jluqgon214.hogarmate.screens.SettingsScreen
 import com.jluqgon214.hogarmate.screens.TasksScreen
+import com.jluqgon214.hogarmate.test.TestScreen
 import com.jluqgon214.hogarmate.viewModel.AdminViewModel
 import com.jluqgon214.hogarmate.viewModel.AppViewModel
 import com.jluqgon214.hogarmate.viewModel.LoginViewModel
@@ -129,7 +130,7 @@ fun AppNavigation(
                 appViewModel.setTextoTop("Configuración")
                 appViewModel.setShowFAB(false)
                 appViewModel.setShowBottomBar(true)
-                SettingsScreen(themeViewModel = themeViewModel, paddingValues = contentPadding)
+                SettingsScreen(themeViewModel = themeViewModel, paddingValues = contentPadding, navController = navController)
             }
 
             composable("adminScreen") {
@@ -142,6 +143,10 @@ fun AppNavigation(
                     paddingValues = contentPadding,
                     tasksViewModel = tasksViewModel
                 )
+            }
+
+            composable("testScreen") {
+                TestScreen(tasksViewModel = tasksViewModel, paddingValues = contentPadding)
             }
         }
     }

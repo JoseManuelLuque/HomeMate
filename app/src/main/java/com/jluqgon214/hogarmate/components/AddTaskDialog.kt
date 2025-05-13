@@ -16,11 +16,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jluqgon214.hogarmate.ui.theme.GreenPrimary
+import com.jluqgon214.hogarmate.viewModel.AdminViewModel
 import com.jluqgon214.hogarmate.viewModel.TasksViewModel
 
 @Composable
 fun AddTaskDialog(
     tasksViewModel: TasksViewModel,
+    adminViewModel: AdminViewModel?,
     usuarioId: String?
 ) {
     val description = tasksViewModel.description.collectAsState().value
@@ -30,7 +32,7 @@ fun AddTaskDialog(
     AlertDialog(
         onDismissRequest = { tasksViewModel.setShowDialog(false) },
         title = {
-            if (usuarioId == null){
+            if (usuarioId == null) {
                 Text(
                     text = "Agregar Tarea",
                     fontSize = 20.sp,
@@ -67,6 +69,7 @@ fun AddTaskDialog(
                     } else {
                         tasksViewModel.agregarTareaUsuario(usuarioId)
                         tasksViewModel.setAdminDialog(false)
+                        adminViewModel?.obtenerUsuariosConTareas()
                     }
                 },
                 text = "Agregar",
@@ -78,8 +81,8 @@ fun AddTaskDialog(
             AlertButton(
                 onClick = {
                     if (usuarioId == null) {
-                    tasksViewModel.setShowDialog(false) }
-                    else {
+                        tasksViewModel.setShowDialog(false)
+                    } else {
                         tasksViewModel.setAdminDialog(false)
                     }
                 },

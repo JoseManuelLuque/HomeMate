@@ -10,16 +10,20 @@ import kotlinx.coroutines.launch
 import retrofit2.awaitResponse
 
 class AdminViewModel : ViewModel() {
-
     private val _UsuariosConTareas = MutableStateFlow<List<UsuarioConTareasDTO>>(emptyList())
     val UsuariosConTareas = _UsuariosConTareas
+
+    private val _usuariosCargando = MutableStateFlow(false)
+    val usuariosCargando = _usuariosCargando
 
 
     // Método para obtener todos los usuarios con tareas
     fun obtenerUsuariosConTareas() {
         viewModelScope.launch {
             try {
-                val respuestaApi = RetrofitClient.instance.obtenerUsuariosConTareas().awaitResponse()
+                _usuariosCargando.value = true
+                val respuestaApi =
+                    RetrofitClient.instance.obtenerUsuariosConTareas().awaitResponse()
                 if (respuestaApi.isSuccessful) {
                     _UsuariosConTareas.value = respuestaApi.body() ?: emptyList()
                     Log.d("AdminViewModel", "Usuarios con tareas: ${_UsuariosConTareas.value}")
@@ -28,8 +32,10 @@ class AdminViewModel : ViewModel() {
                 }
             } catch (e: Exception) {
                 _UsuariosConTareas.value = emptyList()
+                Log.e("AdminViewModel", "Error al obtener usuarios con tareas: ${e.message}")
+            } finally {
+                _usuariosCargando.value = false
             }
         }
     }
-
 }

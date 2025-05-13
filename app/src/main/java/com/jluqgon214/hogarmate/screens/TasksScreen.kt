@@ -33,7 +33,7 @@ fun TasksScreen(tasksViewModel: TasksViewModel, paddingValues: PaddingValues) {
     val showDialog by tasksViewModel.showDialog.collectAsState()
 
     if (showDialog) {
-        AddTaskDialog(tasksViewModel, null)
+        AddTaskDialog(tasksViewModel, adminViewModel = null ,null)
     }
 
     if (tareasCargando) {

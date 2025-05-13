@@ -27,6 +27,13 @@ class TasksViewModel : ViewModel() {
     private val _adminDialog = MutableStateFlow(false)
     val adminDialog: StateFlow<Boolean> = _adminDialog
 
+    private val _usuarioId = MutableStateFlow("")
+    val usuarioId: StateFlow<String> = _usuarioId
+
+    fun setUsuarioId(id: String) {
+        _usuarioId.value = id
+    }
+
     fun setAdminDialog(show: Boolean) {
         _adminDialog.value = show
     }
