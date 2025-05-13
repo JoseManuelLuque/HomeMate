@@ -15,6 +15,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.jluqgon214.hogarmate.components.CustomButton
@@ -26,7 +27,6 @@ import com.jluqgon214.hogarmate.viewModel.LoginViewModel
 fun LoginScreen(loginViewModel: LoginViewModel, navController: NavController) {
     val email by loginViewModel.email.collectAsState()
     val password by loginViewModel.password.collectAsState()
-    val loginResponse by loginViewModel.loginResponse.collectAsState()
     val errorMessage by loginViewModel.errorMessage.collectAsState()
     val loginCorrecto by loginViewModel.loginCorrecto.collectAsState()
     val isLoading by loginViewModel.isLoading.collectAsState()
@@ -69,6 +69,7 @@ fun LoginScreen(loginViewModel: LoginViewModel, navController: NavController) {
                 content = {
                     if (isLoading) {
                         CircularProgressIndicator(
+                            modifier = Modifier.testTag("CircularProgressIndicator"),
                             color = Color.White
                         )
                     } else {

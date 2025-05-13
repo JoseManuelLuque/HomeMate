@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -21,6 +23,9 @@ fun TasksScreen(tasksViewModel: TasksViewModel, paddingValues: PaddingValues) {
     val tareas by tasksViewModel.tareas.collectAsState()
     val tareasCargando by tasksViewModel.tareasCargando.collectAsState()
 
+    val tareasPendientes = tareas.filter { !it.completada }
+    val tareasCompletadas = tareas.filter { it.completada }
+
     LaunchedEffect(Unit) {
         tasksViewModel.obtenerTareas()
     }
@@ -28,13 +33,15 @@ fun TasksScreen(tasksViewModel: TasksViewModel, paddingValues: PaddingValues) {
     val showDialog by tasksViewModel.showDialog.collectAsState()
 
     if (showDialog) {
-        AddTaskDialog(tasksViewModel)
+        AddTaskDialog(tasksViewModel, null)
     }
 
     if (tareasCargando) {
-        Box(modifier = Modifier
-            .fillMaxSize()
-            .padding(paddingValues)) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+        ) {
             CircularProgressIndicator(
                 modifier = Modifier.align(Alignment.Center)
             )
@@ -45,13 +52,43 @@ fun TasksScreen(tasksViewModel: TasksViewModel, paddingValues: PaddingValues) {
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-            for (tarea in tareas) {
+            item {
+
+                Text("Tareas Pendientes")
+
+            }
+            for (tarea in tareasPendientes) {
                 item {
                     CardTarea(
-                        tarea.descripcion, tarea.usuario.username, { TODO() }, {
-                            tasksViewModel.eliminarTarea(tarea.id)
+                        tarea, tarea.usuario.username, {
+                            tasksViewModel.actualizarEstadoTarea(tarea._id)
+                        }, {
+                            tasksViewModel.eliminarTarea(tarea._id)
                         }
                     )
+
+                }
+            }
+
+            item{
+                HorizontalDivider()
+            }
+
+            item {
+
+                Text("Tareas Completadas")
+
+            }
+            for (tarea in tareasCompletadas) {
+                item {
+                    CardTarea(
+                        tarea, tarea.usuario.username, {
+                            tasksViewModel.actualizarEstadoTarea(tarea._id)
+                        }, {
+                            tasksViewModel.eliminarTarea(tarea._id)
+                        }
+                    )
+
                 }
             }
         }

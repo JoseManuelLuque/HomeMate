@@ -14,7 +14,7 @@ val YellowAccent = Color(0xFFFFEB3B) // Amarillo luminoso
 val messageError = Color(0xFFF44336) // Rojo
 
 // Colores para el modo claro
-val LightBackground = Color(0xFFFFF3E0) // Fondo cálido
+val LightBackground = Color(0xFFF0FAF0) // Fondo cálido
 val LightSurface = Color(0xFFFFFFFF) // Superficie blanca
 val LightOnPrimary = Color(0xFF1B5E20) // Texto oscuro sobre primario
 val LightOnSecondary = Color(0xFF4E342E) // Texto marrón oscuro

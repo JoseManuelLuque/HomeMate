@@ -1,5 +1,6 @@
 package com.jluqgon214.hogarmate.components
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,18 +20,29 @@ import com.jluqgon214.hogarmate.viewModel.TasksViewModel
 
 @Composable
 fun AddTaskDialog(
-    tasksViewModel: TasksViewModel
+    tasksViewModel: TasksViewModel,
+    usuarioId: String?
 ) {
     val description = tasksViewModel.description.collectAsState().value
+
+    Log.d("Dialog", "idUsuario: $usuarioId")
 
     AlertDialog(
         onDismissRequest = { tasksViewModel.setShowDialog(false) },
         title = {
-            Text(
-                text = "Agregar Tarea",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold
-            )
+            if (usuarioId == null){
+                Text(
+                    text = "Agregar Tarea",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            } else {
+                Text(
+                    text = "Agregar Tarea a Usuario ${usuarioId}",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            }
         },
         text = {
             Column(
@@ -49,8 +61,13 @@ fun AddTaskDialog(
         confirmButton = {
             AlertButton(
                 onClick = {
-                    tasksViewModel.agregarTarea()
-                    tasksViewModel.setShowDialog(false)
+                    if (usuarioId == null) {
+                        tasksViewModel.agregarTarea()
+                        tasksViewModel.setShowDialog(false)
+                    } else {
+                        tasksViewModel.agregarTareaUsuario(usuarioId)
+                        tasksViewModel.setAdminDialog(false)
+                    }
                 },
                 text = "Agregar",
                 textColor = GreenPrimary,
@@ -60,7 +77,11 @@ fun AddTaskDialog(
         dismissButton = {
             AlertButton(
                 onClick = {
-                    tasksViewModel.setShowDialog(false)
+                    if (usuarioId == null) {
+                    tasksViewModel.setShowDialog(false) }
+                    else {
+                        tasksViewModel.setAdminDialog(false)
+                    }
                 },
                 text = "Cancelar",
                 textColor = Color.Red

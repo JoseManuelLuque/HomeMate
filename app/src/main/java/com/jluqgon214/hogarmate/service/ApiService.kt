@@ -1,6 +1,7 @@
 package com.jluqgon214.hogarmate.service
 
 import com.jluqgon214.hogarmate.model.DTO.CrearTareaDTO
+import com.jluqgon214.hogarmate.model.DTO.UsuarioConTareasDTO
 import com.jluqgon214.hogarmate.model.LoginRequest
 import com.jluqgon214.hogarmate.model.LoginResponse
 import com.jluqgon214.hogarmate.model.RegisterRequest
@@ -35,6 +36,9 @@ interface ApiService {
     @PUT("/usuarios/update")
     fun actualizarUsuario(@Body usuario: Usuario): Call<Usuario>
 
+    @GET("/usuarios/tareas")
+    fun obtenerUsuariosConTareas(): Call<List<UsuarioConTareasDTO>>
+
 
     // TAREAS
 
@@ -46,4 +50,10 @@ interface ApiService {
 
     @DELETE("/tareas/delete/{id}")
     suspend fun eliminarTarea(@Path("id") id: String?): Response<Unit>
+
+    @PUT("/tareas/update/status/{id}")
+    suspend fun actualizarEstadoTarea(@Path("id") id: String?): Call<Tarea>
+
+    @POST("/tareas/crear/usuario/{idUsuario}")
+    fun crearTareaUsuario(@Path("idUsuario") idUsuario: String?, @Body tarea: CrearTareaDTO): Call<Tarea>
 }

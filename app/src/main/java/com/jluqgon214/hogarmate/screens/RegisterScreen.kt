@@ -66,7 +66,7 @@ fun RegisterScreen(registerViewModel: RegisterViewModel, navController: NavContr
             label = "Repite tu Contraseña",
             placeholder = "Escribe tu contraseña de nuevo"
         )
-        Row() {
+        Row {
             CustomButton(
                 content = { Text("Volver") },
                 onClick = {

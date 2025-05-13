@@ -13,7 +13,6 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,16 +24,15 @@ import com.exyte.animatednavbar.animation.balltrajectory.Straight
 import com.exyte.animatednavbar.animation.indendshape.Height
 import com.exyte.animatednavbar.utils.noRippleClickable
 import com.jluqgon214.hogarmate.ui.theme.GreenPrimary
-import com.jluqgon214.hogarmate.viewModel.NavigationViewModel
 
 @Composable
-fun AnimatedBottomBar(
+fun AdminAnimatedBottomBar(
     show: Boolean,
     selectedIndex: Int,
     onItemSelected: (Int) -> Unit,
     onNavigate: (Int) -> Unit
 ) {
-    val navigationBarItems = remember { NavegationBarItems.values().toList() }
+    val navigationBarItems = remember { AdminNavegationBarItems.values().toList() }
 
     if (show) {
         AnimatedNavigationBar(
@@ -67,11 +65,10 @@ fun AnimatedBottomBar(
     }
 }
 
-enum class NavegationBarItems(val icon: ImageVector) {
+enum class AdminNavegationBarItems(val icon: ImageVector) {
     Home(Icons.Filled.Home),
     Tasks(Icons.Filled.Check),
     Profile(Icons.Filled.Person),
-    Settings(Icons.Filled.Settings)
+    Settings(Icons.Filled.Settings),
+    Admin(Icons.Filled.Build)
 }
-
-

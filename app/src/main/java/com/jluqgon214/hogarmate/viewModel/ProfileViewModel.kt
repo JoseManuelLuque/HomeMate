@@ -11,7 +11,6 @@ import kotlinx.coroutines.launch
 import retrofit2.awaitResponse
 
 class ProfileViewModel : ViewModel() {
-
     private val apiService = RetrofitClient.instance
 
     private val _usuario = MutableStateFlow<Usuario?>(null)

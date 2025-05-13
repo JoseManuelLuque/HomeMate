@@ -35,7 +35,7 @@ fun EditProfileDialog(
             Text(text = "Editar Perfil")
         },
         text = {
-            Column(){
+            Column {
                 CustomTextField(
                     label = "Nombre de usuario",
                     value = username,
