@@ -1,5 +1,6 @@
 package com.jluqgon214.hogarmate.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,34 +15,45 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.zIndex
 import com.jluqgon214.hogarmate.components.AddTaskDialog
 import com.jluqgon214.hogarmate.components.UsuarioItem
 import com.jluqgon214.hogarmate.viewModel.AdminViewModel
+import com.jluqgon214.hogarmate.viewModel.LoginViewModel
+import com.jluqgon214.hogarmate.viewModel.ProfileViewModel
 import com.jluqgon214.hogarmate.viewModel.TasksViewModel
 
 @Composable
 fun AdminScreen(
     adminViewModel: AdminViewModel,
     paddingValues: PaddingValues,
-    tasksViewModel: TasksViewModel
+    tasksViewModel: TasksViewModel,
+    profileViewModel: ProfileViewModel
 ) {
     val usuariosConTareas by adminViewModel.UsuariosConTareas.collectAsState()
 
     val adminDialog by tasksViewModel.adminDialog.collectAsState()
 
-    val usuarioId by tasksViewModel.usuarioId.collectAsState()
+    val usuario by tasksViewModel.usuario.collectAsState()
 
     val usuariosCargando by adminViewModel.usuariosCargando.collectAsState()
 
     LaunchedEffect(Unit) {
-        adminViewModel.obtenerUsuariosConTareas()
+        profileViewModel.obtenerUsuario()
+        profileViewModel.usuario.collect { usuario ->
+            usuario?._id?.let { id ->
+                adminViewModel.setUsuarioActualId(id)
+                adminViewModel.obtenerUsuariosConTareas()
+            }
+        }
     }
 
     if (adminDialog) {
         AddTaskDialog(
             tasksViewModel = tasksViewModel,
             adminViewModel = adminViewModel,
-            usuarioId = usuarioId,
+            usuario = usuario,
         )
     }
 
@@ -50,20 +62,23 @@ fun AdminScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
+                .zIndex(1f) // Para asegurarse de que el CircularProgressIndicator esté encima de otros elementos
+
         ) {
             CircularProgressIndicator(
                 modifier = Modifier.align(Alignment.Center)
             )
         }
-    } else {
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(paddingValues = paddingValues)
-        ) {
-            items(usuariosConTareas) { usuario ->
-                UsuarioItem(usuario, tasksViewModel)
-            }
+    }
+
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(paddingValues = paddingValues)
+    ) {
+        items(usuariosConTareas) { usuario ->
+            UsuarioItem(usuario, tasksViewModel, adminViewModel)
         }
     }
+
 }

@@ -16,6 +16,12 @@ class AdminViewModel : ViewModel() {
     private val _usuariosCargando = MutableStateFlow(false)
     val usuariosCargando = _usuariosCargando
 
+    var _usuarioActualId = MutableStateFlow<String?>(null) // Usuario que ha iniciado sesión y se encuentra usando al aplicacion
+    val usuarioActualId = _usuarioActualId
+
+    fun setUsuarioActualId(id: String) {
+        _usuarioActualId.value = id
+    }
 
     // Método para obtener todos los usuarios con tareas
     fun obtenerUsuariosConTareas() {
@@ -26,6 +32,11 @@ class AdminViewModel : ViewModel() {
                     RetrofitClient.instance.obtenerUsuariosConTareas().awaitResponse()
                 if (respuestaApi.isSuccessful) {
                     _UsuariosConTareas.value = respuestaApi.body() ?: emptyList()
+
+                    // Filtrar usuarios para excluir al usuario actual
+                    _UsuariosConTareas.value = _UsuariosConTareas.value.filter { it._id != usuarioActualId.value }
+
+
                     Log.d("AdminViewModel", "Usuarios con tareas: ${_UsuariosConTareas.value}")
                 } else {
                     _UsuariosConTareas.value = emptyList()

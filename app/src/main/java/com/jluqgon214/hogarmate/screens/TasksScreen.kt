@@ -14,6 +14,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.zIndex
 import com.jluqgon214.hogarmate.components.AddTaskDialog
 import com.jluqgon214.hogarmate.components.CardTarea
 import com.jluqgon214.hogarmate.viewModel.TasksViewModel
@@ -23,8 +24,8 @@ fun TasksScreen(tasksViewModel: TasksViewModel, paddingValues: PaddingValues) {
     val tareas by tasksViewModel.tareas.collectAsState()
     val tareasCargando by tasksViewModel.tareasCargando.collectAsState()
 
-    val tareasPendientes = tareas.filter { !it.completada }
-    val tareasCompletadas = tareas.filter { it.completada }
+    val tareasPendientes by tasksViewModel.tareasPendientes.collectAsState()
+    val tareasCompletadas by tasksViewModel.tareasCompletadas.collectAsState()
 
     LaunchedEffect(Unit) {
         tasksViewModel.obtenerTareas()
@@ -33,7 +34,7 @@ fun TasksScreen(tasksViewModel: TasksViewModel, paddingValues: PaddingValues) {
     val showDialog by tasksViewModel.showDialog.collectAsState()
 
     if (showDialog) {
-        AddTaskDialog(tasksViewModel, adminViewModel = null ,null)
+        AddTaskDialog(tasksViewModel, adminViewModel = null, null)
     }
 
     if (tareasCargando) {
@@ -41,55 +42,63 @@ fun TasksScreen(tasksViewModel: TasksViewModel, paddingValues: PaddingValues) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
+                .zIndex(1f) // Para asegurarse de que el CircularProgressIndicator esté encima de otros elementos
         ) {
             CircularProgressIndicator(
                 modifier = Modifier.align(Alignment.Center)
             )
         }
-    } else {
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-        ) {
+    }
+
+
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(paddingValues)
+    ) {
+        item {
+
+            Text("Tareas Pendientes")
+
+        }
+        for (tarea in tareasPendientes) {
             item {
+                CardTarea(
+                    tarea, tarea.usuario.username, {
+                        tasksViewModel.actualizarEstadoTarea(tarea._id)
+                        tasksViewModel.obtenerTareas()
+                    }, {
+                        tasksViewModel.eliminarTarea(tarea._id)
+                        tasksViewModel.obtenerTareas()
 
-                Text("Tareas Pendientes")
+                    }
+                )
 
             }
-            for (tarea in tareasPendientes) {
-                item {
-                    CardTarea(
-                        tarea, tarea.usuario.username, {
-                            tasksViewModel.actualizarEstadoTarea(tarea._id)
-                        }, {
-                            tasksViewModel.eliminarTarea(tarea._id)
-                        }
-                    )
+        }
 
-                }
-            }
+        item {
+            HorizontalDivider()
+        }
+        item {
 
-            item{
-                HorizontalDivider()
-            }
+            Text("Tareas Completadas")
 
+        }
+        for (tarea in tareasCompletadas) {
             item {
+                CardTarea(
+                    tarea, tarea.usuario.username, {
+                        tasksViewModel.actualizarEstadoTarea(tarea._id)
+                        tasksViewModel.obtenerTareas()
 
-                Text("Tareas Completadas")
+                    }, {
+                        tasksViewModel.eliminarTarea(tarea._id)
+                        tasksViewModel.obtenerTareas()
 
-            }
-            for (tarea in tareasCompletadas) {
-                item {
-                    CardTarea(
-                        tarea, tarea.usuario.username, {
-                            tasksViewModel.actualizarEstadoTarea(tarea._id)
-                        }, {
-                            tasksViewModel.eliminarTarea(tarea._id)
-                        }
-                    )
+                    }
+                )
 
-                }
             }
         }
     }

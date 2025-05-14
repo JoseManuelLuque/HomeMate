@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.CompareArrows
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material3.Card
@@ -28,10 +27,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.jluqgon214.hogarmate.model.DTO.UsuarioConTareasDTO
+import com.jluqgon214.hogarmate.viewModel.AdminViewModel
 import com.jluqgon214.hogarmate.viewModel.TasksViewModel
 
 @Composable
-fun UsuarioItem(usuario: UsuarioConTareasDTO, tasksViewModel: TasksViewModel) {
+fun UsuarioItem(usuario: UsuarioConTareasDTO, tasksViewModel: TasksViewModel, adminViewModel: AdminViewModel) {
     var expanded by remember { mutableStateOf(false) }
 
     Card(
@@ -67,7 +67,7 @@ fun UsuarioItem(usuario: UsuarioConTareasDTO, tasksViewModel: TasksViewModel) {
                 IconButton(
                     onClick = {
                         tasksViewModel.setAdminDialog(true)
-                        tasksViewModel.setUsuarioId(usuario._id.toString())
+                        tasksViewModel.setUsuario(usuario)
                     },
                     modifier = Modifier
                         .padding(start = 8.dp)
@@ -115,6 +115,8 @@ fun UsuarioItem(usuario: UsuarioConTareasDTO, tasksViewModel: TasksViewModel) {
                             IconButton(
                                 onClick = {
                                     tasksViewModel.actualizarEstadoTarea(tarea._id)
+                                    adminViewModel.obtenerUsuariosConTareas()
+
                                 },
                                 modifier = Modifier.padding(top = 8.dp),
 
@@ -127,6 +129,7 @@ fun UsuarioItem(usuario: UsuarioConTareasDTO, tasksViewModel: TasksViewModel) {
                             IconButton(
                                 onClick = {
                                     tasksViewModel.eliminarTarea(tarea._id)
+                                    adminViewModel.obtenerUsuariosConTareas()
                                 },
                                 modifier = Modifier.padding(top = 8.dp),
 

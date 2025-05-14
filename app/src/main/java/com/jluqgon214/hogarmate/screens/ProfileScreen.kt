@@ -7,16 +7,17 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.runtime.getValue
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.jluqgon214.hogarmate.components.CustomButton
 import com.jluqgon214.hogarmate.components.EditProfileDialog
@@ -25,7 +26,12 @@ import com.jluqgon214.hogarmate.viewModel.LoginViewModel
 import com.jluqgon214.hogarmate.viewModel.ProfileViewModel
 
 @Composable
-fun ProfileScreen(navController: NavController, loginViewModel: LoginViewModel, AppViewModel: AppViewModel, profileViewModel: ProfileViewModel) {
+fun ProfileScreen(
+    navController: NavController,
+    loginViewModel: LoginViewModel,
+    AppViewModel: AppViewModel,
+    profileViewModel: ProfileViewModel
+) {
     val usuario by profileViewModel.usuario.collectAsState()
     val showEditDialog by profileViewModel.showEditDialog.collectAsState()
 
@@ -45,15 +51,24 @@ fun ProfileScreen(navController: NavController, loginViewModel: LoginViewModel, 
         verticalArrangement = Arrangement.Center
     ) {
         Text("Nombre", fontSize = MaterialTheme.typography.headlineLarge.fontSize)
-        Text(usuario?.username ?: "Cargando...", fontSize = MaterialTheme.typography.headlineMedium.fontSize)
+        Text(
+            usuario?.username ?: "Cargando...",
+            fontSize = MaterialTheme.typography.headlineSmall.fontSize
+        )
 
         Text("Correo Electrónico", fontSize = MaterialTheme.typography.headlineLarge.fontSize)
-        Text(usuario?.email ?: "Cargando...", fontSize = MaterialTheme.typography.headlineMedium.fontSize)
+        Text(
+            usuario?.email ?: "Cargando...",
+            fontSize = MaterialTheme.typography.headlineSmall.fontSize
+        )
 
-        Row (
-            modifier = Modifier.fillMaxWidth().wrapContentHeight(),
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .padding(8.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
-        ){
+        ) {
             CustomButton(
                 onClick = {
                     profileViewModel.setShowEditDialog(true)

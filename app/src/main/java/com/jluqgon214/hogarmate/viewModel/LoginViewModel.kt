@@ -33,6 +33,14 @@ class LoginViewModel : ViewModel() {
     private val _loginCorrecto = MutableStateFlow<Boolean>(false)
     val loginCorrecto: StateFlow<Boolean> = _loginCorrecto
 
+    private val _usuarioActualId = MutableStateFlow<String?>(null)
+    val usuarioActualId: StateFlow<String?> = _usuarioActualId
+
+    fun setUsuarioActualId(id: String?) {
+        _usuarioActualId.value = id
+    }
+
+
     fun setLoginCorrecto(value: Boolean) {
         _loginCorrecto.value = value
     }

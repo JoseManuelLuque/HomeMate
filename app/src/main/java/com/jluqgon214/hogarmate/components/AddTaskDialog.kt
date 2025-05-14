@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.jluqgon214.hogarmate.model.DTO.UsuarioConTareasDTO
 import com.jluqgon214.hogarmate.ui.theme.GreenPrimary
 import com.jluqgon214.hogarmate.viewModel.AdminViewModel
 import com.jluqgon214.hogarmate.viewModel.TasksViewModel
@@ -23,16 +24,16 @@ import com.jluqgon214.hogarmate.viewModel.TasksViewModel
 fun AddTaskDialog(
     tasksViewModel: TasksViewModel,
     adminViewModel: AdminViewModel?,
-    usuarioId: String?
+    usuario: UsuarioConTareasDTO?
 ) {
     val description = tasksViewModel.description.collectAsState().value
 
-    Log.d("Dialog", "idUsuario: $usuarioId")
+    Log.d("Dialog", "idUsuario: ${usuario?._id}")
 
     AlertDialog(
         onDismissRequest = { tasksViewModel.setShowDialog(false) },
         title = {
-            if (usuarioId == null) {
+            if (usuario == null) {
                 Text(
                     text = "Agregar Tarea",
                     fontSize = 20.sp,
@@ -40,7 +41,7 @@ fun AddTaskDialog(
                 )
             } else {
                 Text(
-                    text = "Agregar Tarea a Usuario ${usuarioId}",
+                    text = "Agregar Tarea a Usuario ${usuario.username}",
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold
                 )
@@ -63,11 +64,11 @@ fun AddTaskDialog(
         confirmButton = {
             AlertButton(
                 onClick = {
-                    if (usuarioId == null) {
+                    if (usuario == null) {
                         tasksViewModel.agregarTarea()
                         tasksViewModel.setShowDialog(false)
                     } else {
-                        tasksViewModel.agregarTareaUsuario(usuarioId)
+                        tasksViewModel.agregarTareaUsuario(usuario._id)
                         tasksViewModel.setAdminDialog(false)
                         adminViewModel?.obtenerUsuariosConTareas()
                     }
@@ -80,7 +81,7 @@ fun AddTaskDialog(
         dismissButton = {
             AlertButton(
                 onClick = {
-                    if (usuarioId == null) {
+                    if (usuario == null) {
                         tasksViewModel.setShowDialog(false)
                     } else {
                         tasksViewModel.setAdminDialog(false)

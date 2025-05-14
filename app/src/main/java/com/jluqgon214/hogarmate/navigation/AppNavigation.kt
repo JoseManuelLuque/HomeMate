@@ -33,6 +33,7 @@ import com.jluqgon214.hogarmate.viewModel.ThemeViewModel
 @Composable
 fun AppNavigation(
     themeViewModel: ThemeViewModel,
+    navigaionViewModel: NavigationViewModel
 ) {
     // Navigation Controller
     val navController = rememberNavController()
@@ -45,6 +46,7 @@ fun AppNavigation(
     val navigaionViewModel = NavigationViewModel()
     val adminViewModel = AdminViewModel()
     val appViewModel = AppViewModel()
+
 
     // Variables de estado
     val textoTop by appViewModel.textoTop.collectAsState()
@@ -130,7 +132,7 @@ fun AppNavigation(
                 appViewModel.setTextoTop("Configuración")
                 appViewModel.setShowFAB(false)
                 appViewModel.setShowBottomBar(true)
-                SettingsScreen(themeViewModel = themeViewModel, paddingValues = contentPadding, navController = navController)
+                SettingsScreen(themeViewModel = themeViewModel, paddingValues = contentPadding, navController = navController, appViewModel = appViewModel, navigationViewModel = navigaionViewModel)
             }
 
             composable("adminScreen") {
@@ -141,7 +143,8 @@ fun AppNavigation(
                 AdminScreen(
                     adminViewModel = adminViewModel,
                     paddingValues = contentPadding,
-                    tasksViewModel = tasksViewModel
+                    tasksViewModel = tasksViewModel,
+                    profileViewModel = profileViewModel
                 )
             }
 

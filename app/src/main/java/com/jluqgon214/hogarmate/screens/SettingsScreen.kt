@@ -16,10 +16,12 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.jluqgon214.hogarmate.components.CustomButton
 import com.jluqgon214.hogarmate.components.ThemeSwitcher
+import com.jluqgon214.hogarmate.viewModel.AppViewModel
+import com.jluqgon214.hogarmate.viewModel.NavigationViewModel
 import com.jluqgon214.hogarmate.viewModel.ThemeViewModel
 
 @Composable
-fun SettingsScreen(themeViewModel: ThemeViewModel, paddingValues: PaddingValues, navController: NavController) {
+fun SettingsScreen(themeViewModel: ThemeViewModel, paddingValues: PaddingValues, navController: NavController, appViewModel: AppViewModel, navigationViewModel: NavigationViewModel) {
     val isDarkTheme = themeViewModel.isDarkTheme.collectAsState().value
 
     Column(modifier = Modifier
@@ -40,6 +42,16 @@ fun SettingsScreen(themeViewModel: ThemeViewModel, paddingValues: PaddingValues,
                 darkTheme = isDarkTheme,
                 onClick = {
                     themeViewModel.toggleTheme()
+
+                    navController.navigate("SettingsScreen") {
+                        popUpTo("SettingsScreen") { inclusive = true }
+                    }
+
+                    appViewModel.setSelectedBottomBarIndex(3)
+
+                    navigationViewModel.comprobarAdmin()
+
+
                 },
                 size = 60.dp
             )

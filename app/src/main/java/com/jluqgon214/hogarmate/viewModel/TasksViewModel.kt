@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jluqgon214.hogarmate.client.RetrofitClient
 import com.jluqgon214.hogarmate.model.DTO.CrearTareaDTO
+import com.jluqgon214.hogarmate.model.DTO.UsuarioConTareasDTO
 import com.jluqgon214.hogarmate.model.Tarea
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -27,11 +28,11 @@ class TasksViewModel : ViewModel() {
     private val _adminDialog = MutableStateFlow(false)
     val adminDialog: StateFlow<Boolean> = _adminDialog
 
-    private val _usuarioId = MutableStateFlow("")
-    val usuarioId: StateFlow<String> = _usuarioId
+    private val _usuario = MutableStateFlow<UsuarioConTareasDTO?>(null)
+    val usuario: MutableStateFlow<UsuarioConTareasDTO?> = _usuario
 
-    fun setUsuarioId(id: String) {
-        _usuarioId.value = id
+    fun setUsuario(usuario: UsuarioConTareasDTO) {
+        _usuario.value = usuario
     }
 
     fun setAdminDialog(show: Boolean) {
@@ -46,6 +47,20 @@ class TasksViewModel : ViewModel() {
         _description.value = description
     }
 
+    private val _tareasPendientes = MutableStateFlow<List<Tarea>>(emptyList())
+    val tareasPendientes: MutableStateFlow<List<Tarea>> = _tareasPendientes
+
+    private val _tareasCompletadas = MutableStateFlow<List<Tarea>>(emptyList())
+    val tareasCompletadas: MutableStateFlow<List<Tarea>> = _tareasCompletadas
+
+    // Método para filtrar tareas
+    fun filtrarTareas() {
+        viewModelScope.launch {
+            _tareasPendientes.value = _tareas.value.filter { !it.completada }
+            _tareasCompletadas.value = _tareas.value.filter { it.completada }
+        }
+    }
+
     // Método para obtener todas las tareas
     fun obtenerTareas() {
         viewModelScope.launch {
@@ -53,9 +68,8 @@ class TasksViewModel : ViewModel() {
                 _tareasCargando.value = true
                 val response = RetrofitClient.instance.obtenerTareasUsuario().awaitResponse()
                 if (response.isSuccessful) {
-                    val tareasObtenidas = response.body()
-                    Log.d("TasksViewModel", "Tareas obtenidas: $tareasObtenidas")
-                    _tareas.value = tareasObtenidas ?: emptyList()
+                    _tareas.value = response.body() ?: emptyList()
+                    filtrarTareas() // Filtra las tareas después de obtenerlas
                 } else {
                     Log.d(
                         "TasksViewModel",
@@ -94,10 +108,14 @@ class TasksViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 val tareaDTO = CrearTareaDTO(description.value)
-                val response = RetrofitClient.instance.crearTareaUsuario(idUsuario, tareaDTO).awaitResponse()
+                val response =
+                    RetrofitClient.instance.crearTareaUsuario(idUsuario, tareaDTO).awaitResponse()
                 if (response.isSuccessful) {
                     obtenerTareas() // Actualiza la lista de tareas después de agregar
-                    Log.d("PRUEBA", "Tarea agregada con éxito, Description: ${description.value}, Usuario: $idUsuario")
+                    Log.d(
+                        "PRUEBA",
+                        "Tarea agregada con éxito, Description: ${description.value}, Usuario: $idUsuario"
+                    )
                 } else {
                     Log.d(
                         "TasksViewModel",
