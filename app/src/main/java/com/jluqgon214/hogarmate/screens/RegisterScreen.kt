@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -15,8 +16,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.jluqgon214.hogarmate.components.CustomButton
 import com.jluqgon214.hogarmate.components.CustomTextField
-import com.jluqgon214.hogarmate.components.TopTittle
-import com.jluqgon214.hogarmate.ui.theme.messageError
 import com.jluqgon214.hogarmate.viewModel.RegisterViewModel
 
 @Composable
@@ -40,7 +39,7 @@ fun RegisterScreen(registerViewModel: RegisterViewModel, navController: NavContr
             navController.navigate("loginScreen")
         }
         errorMessage?.let {
-            Text(it, color = messageError)
+            Text(it, color = MaterialTheme.colorScheme.error)
         }
         CustomTextField(
             value = username,

@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -20,7 +21,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.jluqgon214.hogarmate.components.CustomButton
 import com.jluqgon214.hogarmate.components.CustomTextField
-import com.jluqgon214.hogarmate.ui.theme.messageError
 import com.jluqgon214.hogarmate.viewModel.LoginViewModel
 
 @Composable
@@ -39,7 +39,7 @@ fun LoginScreen(loginViewModel: LoginViewModel, navController: NavController) {
     ) {
 
         errorMessage?.let {
-            Text(it, color = messageError)
+            Text(it, color = MaterialTheme.colorScheme.error)
         }
         CustomTextField(
             value = email,

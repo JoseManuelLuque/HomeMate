@@ -12,6 +12,7 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -23,7 +24,6 @@ import com.exyte.animatednavbar.AnimatedNavigationBar
 import com.exyte.animatednavbar.animation.balltrajectory.Straight
 import com.exyte.animatednavbar.animation.indendshape.Height
 import com.exyte.animatednavbar.utils.noRippleClickable
-import com.jluqgon214.hogarmate.ui.theme.GreenPrimary
 
 @Composable
 fun AdminAnimatedBottomBar(
@@ -38,7 +38,7 @@ fun AdminAnimatedBottomBar(
         AnimatedNavigationBar(
             modifier = Modifier.height(62.dp),
             selectedIndex = selectedIndex,
-            ballColor = GreenPrimary,
+            ballColor = MaterialTheme.colorScheme.primary,
             barColor = Color.Black,
             ballAnimation = Straight(tween(300)),
             indentAnimation = Height(tween(300)),
@@ -57,7 +57,7 @@ fun AdminAnimatedBottomBar(
                         modifier = Modifier.size(26.dp),
                         imageVector = item.icon,
                         contentDescription = "Icono Bottom Bar",
-                        tint = if (selectedIndex == item.ordinal) GreenPrimary else Color.Gray
+                        tint = if (selectedIndex == item.ordinal) MaterialTheme.colorScheme.primary else Color.Gray
                     )
                 }
             }

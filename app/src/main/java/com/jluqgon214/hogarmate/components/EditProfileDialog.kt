@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -12,7 +13,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.jluqgon214.hogarmate.ui.theme.GreenPrimary
 import com.jluqgon214.hogarmate.viewModel.ProfileViewModel
 
 @Composable
@@ -20,7 +20,7 @@ fun EditProfileDialog(
     profileViewModel: ProfileViewModel,
 ) {
 
-    LaunchedEffect(Unit){
+    LaunchedEffect(Unit) {
         profileViewModel.setUsername(profileViewModel.usuario.value?.username ?: "")
         profileViewModel.setEmail(profileViewModel.usuario.value?.email ?: "")
     }
@@ -61,7 +61,7 @@ fun EditProfileDialog(
                     profileViewModel.setShowEditDialog(false)
                 },
                 text = "Guardar",
-                textColor = GreenPrimary,
+                textColor = MaterialTheme.colorScheme.primary,
             )
         },
         dismissButton = {

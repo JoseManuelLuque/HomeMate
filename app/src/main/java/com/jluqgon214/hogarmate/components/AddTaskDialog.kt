@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -16,7 +17,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jluqgon214.hogarmate.model.DTO.UsuarioConTareasDTO
-import com.jluqgon214.hogarmate.ui.theme.GreenPrimary
 import com.jluqgon214.hogarmate.viewModel.AdminViewModel
 import com.jluqgon214.hogarmate.viewModel.TasksViewModel
 
@@ -74,7 +74,7 @@ fun AddTaskDialog(
                     }
                 },
                 text = "Agregar",
-                textColor = GreenPrimary,
+                textColor = MaterialTheme.colorScheme.primary,
                 enabled = description.isNotBlank() // Botón habilitado solo si la descripción no está vacía
             )
         },

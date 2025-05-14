@@ -9,14 +9,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import com.jluqgon214.hogarmate.ui.theme.GreenPrimary
 
 @Composable
 fun TopTittle(texto: String) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .background(GreenPrimary)
+            .background(MaterialTheme.colorScheme.primaryContainer)
             .systemBarsPadding(),
     ) {
         Text(texto, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.titleLarge)
