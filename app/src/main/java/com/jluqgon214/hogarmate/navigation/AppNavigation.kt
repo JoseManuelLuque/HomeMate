@@ -5,6 +5,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -12,6 +14,7 @@ import androidx.navigation.compose.rememberNavController
 import com.jluqgon214.hogarmate.components.AdminAnimatedBottomBar
 import com.jluqgon214.hogarmate.components.AnimatedBottomBar
 import com.jluqgon214.hogarmate.components.FAB
+import com.jluqgon214.hogarmate.components.PersistentBottomBar
 import com.jluqgon214.hogarmate.components.TopTittle
 import com.jluqgon214.hogarmate.screens.AdminScreen
 import com.jluqgon214.hogarmate.screens.HomeScreen
@@ -47,12 +50,12 @@ fun AppNavigation(
     val adminViewModel = AdminViewModel()
     val appViewModel = AppViewModel()
 
-
     // Variables de estado
     val textoTop by appViewModel.textoTop.collectAsState()
     val showFAB by appViewModel.showFAB.collectAsState()
     val showBottomBar by appViewModel.showBottomBar.collectAsState()
     val selectedBottomBarIndex by appViewModel.selectedBottomBarIndex.collectAsState()
+    val isAdmin by navigaionViewModel.isAdmin.collectAsState()
 
     Scaffold(
         topBar = { TopTittle(texto = textoTop) },
@@ -62,21 +65,13 @@ fun AppNavigation(
             }, show = showFAB)
         },
         bottomBar = {
-            if (navigaionViewModel.isAdmin.collectAsState().value) {
-                AdminAnimatedBottomBar(
-                    show = showBottomBar,
-                    selectedIndex = selectedBottomBarIndex,
-                    onItemSelected = { index -> appViewModel.setSelectedBottomBarIndex(index) },
-                    onNavigate = { index -> navigateToIndex(navController, index) }
-                )
-            } else {
-                AnimatedBottomBar(
-                    show = showBottomBar,
-                    selectedIndex = selectedBottomBarIndex,
-                    onItemSelected = { index -> appViewModel.setSelectedBottomBarIndex(index) },
-                    onNavigate = { index -> navigateToIndex(navController, index) }
-                )
-            }
+            PersistentBottomBar(
+                isAdmin = isAdmin,
+                showBottomBar = showBottomBar,
+                selectedBottomBarIndex = selectedBottomBarIndex,
+                onItemSelected = { index -> appViewModel.setSelectedBottomBarIndex(index) },
+                onNavigate = { index -> navigateToIndex(navController, index) },
+            )
         },
     ) { contentPadding ->
         NavHost(navController, startDestination = "loginScreen") {
@@ -101,6 +96,7 @@ fun AppNavigation(
                 appViewModel.setTextoTop("Pantalla Principal")
                 appViewModel.setShowFAB(true)
                 appViewModel.setShowBottomBar(true)
+                appViewModel.setSelectedBottomBarIndex(0)
                 HomeScreen()
 
                 LaunchedEffect(Unit) {
@@ -113,6 +109,7 @@ fun AppNavigation(
                 appViewModel.setTextoTop("Tareas")
                 appViewModel.setShowFAB(true)
                 appViewModel.setShowBottomBar(true)
+                appViewModel.setSelectedBottomBarIndex(1)
                 TasksScreen(tasksViewModel = tasksViewModel, paddingValues = contentPadding)
             }
 
@@ -120,6 +117,8 @@ fun AppNavigation(
                 appViewModel.setTextoTop("Perfil")
                 appViewModel.setShowFAB(false)
                 appViewModel.setShowBottomBar(true)
+                appViewModel.setSelectedBottomBarIndex(2)
+
                 ProfileScreen(
                     navController = navController,
                     loginViewModel = loginViewModel,
@@ -132,13 +131,25 @@ fun AppNavigation(
                 appViewModel.setTextoTop("Configuración")
                 appViewModel.setShowFAB(false)
                 appViewModel.setShowBottomBar(true)
-                SettingsScreen(themeViewModel = themeViewModel, paddingValues = contentPadding, navController = navController, appViewModel = appViewModel, navigationViewModel = navigaionViewModel)
+
+                // Forzar la actualización de la barra inferior, porque al cambiar de tema se reinicia el estado de la misma
+                navigaionViewModel.comprobarAdmin()
+                appViewModel.setSelectedBottomBarIndex(3)
+
+                SettingsScreen(
+                    themeViewModel = themeViewModel,
+                    paddingValues = contentPadding,
+                    navController = navController,
+                    appViewModel = appViewModel,
+                    navigationViewModel = navigaionViewModel
+                )
             }
 
             composable("adminScreen") {
                 appViewModel.setTextoTop("Administración")
                 appViewModel.setShowFAB(false)
                 appViewModel.setShowBottomBar(true)
+                appViewModel.setSelectedBottomBarIndex(4)
                 // Aquí puedes agregar la pantalla de administración
                 AdminScreen(
                     adminViewModel = adminViewModel,

@@ -28,5 +28,12 @@ class NavigationViewModel : ViewModel() {
             }
         }
     }
+
+    private val _forceUpdateBottomBar = MutableStateFlow(false)
+    val forceUpdateBottomBar: StateFlow<Boolean> = _forceUpdateBottomBar
+
+    fun triggerBottomBarUpdate() {
+        _forceUpdateBottomBar.value = !_forceUpdateBottomBar.value
+    }
 }
 

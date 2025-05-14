@@ -50,8 +50,6 @@ fun SettingsScreen(themeViewModel: ThemeViewModel, paddingValues: PaddingValues,
                     appViewModel.setSelectedBottomBarIndex(3)
 
                     navigationViewModel.comprobarAdmin()
-
-
                 },
                 size = 60.dp
             )
