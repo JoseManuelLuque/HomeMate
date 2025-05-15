@@ -10,34 +10,81 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import retrofit2.awaitResponse
 
+/**
+ * # ViewModel para gestionar el perfil del usuario.
+ */
 class ProfileViewModel : ViewModel() {
+
+    // Variables de estado para gestionar la información del usuario y errores
+
+    /**
+     * Flujo que contiene la información del usuario actual.
+     */
     private val _usuario = MutableStateFlow<Usuario?>(null)
     val usuario: StateFlow<Usuario?> = _usuario
 
+    /**
+     * Flujo que contiene el mensaje de error en caso de que ocurra un problema.
+     */
     private val _errorMessage = MutableStateFlow<String?>(null)
     val errorMessage: StateFlow<String?> = _errorMessage
 
+    /**
+     * Flujo que indica si se debe mostrar el diálogo de edición.
+     */
     private val _showEditDialog = MutableStateFlow(false)
     val showEditDialog: StateFlow<Boolean> = _showEditDialog
 
-    fun setShowEditDialog(value: Boolean) {
-        _showEditDialog.value = value
-    }
-
+    /**
+     * Flujo que contiene el nombre de usuario.
+     */
     private val _username = MutableStateFlow("")
     val username: StateFlow<String> = _username
 
+    /**
+     * Flujo que contiene el correo electrónico del usuario.
+     */
+    private val _email = MutableStateFlow("")
+    val email: StateFlow<String> = _email
+
+    // Funciones para establecer el nombre de usuario, el correo electrónico y el diálogo de edición
+
+    /**
+     * ### Establece el nombre de usuario.
+     *
+     * @param value Nombre de usuario.
+     */
     fun setUsername(value: String) {
         _username.value = value
     }
 
-    private val _email = MutableStateFlow("")
-    val email: StateFlow<String> = _email
-
+    /**
+     * ### Establece el correo electrónico del usuario.
+     *
+     * @param value Correo electrónico.
+     */
     fun setEmail(value: String) {
         _email.value = value
     }
 
+    /**
+     * ### Establece si se debe mostrar el diálogo de edición.
+     *
+     * @param value Valor booleano que indica si se muestra el diálogo.
+     */
+    fun setShowEditDialog(value: Boolean) {
+        _showEditDialog.value = value
+    }
+
+
+    // Funciones para obtener y actualizar el usuario
+
+    /**
+     * ### Obtiene la información del usuario desde la API.
+     *
+     * Realiza una llamada a la API para obtener los datos del usuario y actualiza
+     * el flujo de estado `_usuario`. En caso de error, actualiza `_errorMessage`.
+     */
     fun obtenerUsuario() {
         viewModelScope.launch {
             try {
@@ -68,6 +115,13 @@ class ProfileViewModel : ViewModel() {
         }
     }
 
+    /**
+     * ### Actualiza la información del usuario en la API.
+     *
+     * Crea un objeto `Usuario` con los datos actualizados y realiza una llamada
+     * a la API para actualizar la información. Actualiza el flujo `_usuario` si
+     * la operación es exitosa o `_errorMessage` en caso de error.
+     */
     fun actualizarUsuario() {
         viewModelScope.launch {
             try {
@@ -82,7 +136,8 @@ class ProfileViewModel : ViewModel() {
                 )
 
                 // Llamada a la API para actualizar el usuario
-                val response = RetrofitClient.instance.actualizarUsuario(usuarioActualizado).awaitResponse()
+                val response =
+                    RetrofitClient.instance.actualizarUsuario(usuarioActualizado).awaitResponse()
 
                 // Si la respuesta es exitosa, actualiza el flujo de estado con el usuario actualizado
                 if (response.isSuccessful) {
