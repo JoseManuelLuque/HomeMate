@@ -1,6 +1,5 @@
 package com.jluqgon214.hogarmate.screens
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,17 +10,14 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.zIndex
 import com.jluqgon214.hogarmate.components.AddTaskDialog
 import com.jluqgon214.hogarmate.components.UsuarioItem
 import com.jluqgon214.hogarmate.viewModel.AdminViewModel
-import com.jluqgon214.hogarmate.viewModel.LoginViewModel
 import com.jluqgon214.hogarmate.viewModel.ProfileViewModel
 import com.jluqgon214.hogarmate.viewModel.TasksViewModel
 
@@ -32,7 +28,7 @@ fun AdminScreen(
     tasksViewModel: TasksViewModel,
     profileViewModel: ProfileViewModel
 ) {
-    val usuariosConTareas by adminViewModel.UsuariosConTareas.collectAsState()
+    val usuariosConTareas by adminViewModel.usuariosConTareas.collectAsState()
 
     val adminDialog by tasksViewModel.adminDialog.collectAsState()
 

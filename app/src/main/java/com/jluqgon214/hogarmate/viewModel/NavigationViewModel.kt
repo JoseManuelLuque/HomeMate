@@ -9,15 +9,13 @@ import kotlinx.coroutines.launch
 import retrofit2.awaitResponse
 
 class NavigationViewModel : ViewModel() {
-    private val apiService = RetrofitClient.instance
-
     private val _isAdmin = MutableStateFlow(false)
     val isAdmin: StateFlow<Boolean> = _isAdmin
 
     fun comprobarAdmin() {
         viewModelScope.launch {
             try {
-                val response = apiService.comprobarAdmin().awaitResponse()
+                val response = RetrofitClient.instance.comprobarAdmin().awaitResponse()
                 if (response.isSuccessful) {
                     _isAdmin.value = response.body() == true
                 } else {
@@ -27,13 +25,6 @@ class NavigationViewModel : ViewModel() {
                 _isAdmin.value = false
             }
         }
-    }
-
-    private val _forceUpdateBottomBar = MutableStateFlow(false)
-    val forceUpdateBottomBar: StateFlow<Boolean> = _forceUpdateBottomBar
-
-    fun triggerBottomBarUpdate() {
-        _forceUpdateBottomBar.value = !_forceUpdateBottomBar.value
     }
 }
 

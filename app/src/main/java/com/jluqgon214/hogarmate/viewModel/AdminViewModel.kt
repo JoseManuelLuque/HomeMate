@@ -10,18 +10,17 @@ import kotlinx.coroutines.launch
 import retrofit2.awaitResponse
 
 class AdminViewModel : ViewModel() {
-    private val _UsuariosConTareas = MutableStateFlow<List<UsuarioConTareasDTO>>(emptyList())
-    val UsuariosConTareas = _UsuariosConTareas
+    private val _usuariosConTareas = MutableStateFlow<List<UsuarioConTareasDTO>>(emptyList())
+    val usuariosConTareas = _usuariosConTareas
 
     private val _usuariosCargando = MutableStateFlow(false)
     val usuariosCargando = _usuariosCargando
 
-    var _usuarioActualId =
-        MutableStateFlow<String?>(null) // Usuario que ha iniciado sesión y se encuentra usando al aplicacion
-    val usuarioActualId = _usuarioActualId
+    var _idUsuarioActual = MutableStateFlow<String?>(null)
+    val idUsuarioActual = _idUsuarioActual
 
     fun setUsuarioActualId(id: String) {
-        _usuarioActualId.value = id
+        _idUsuarioActual.value = id
     }
 
     // Método para obtener todos los usuarios con tareas
@@ -32,19 +31,19 @@ class AdminViewModel : ViewModel() {
                 val respuestaApi =
                     RetrofitClient.instance.obtenerUsuariosConTareas().awaitResponse()
                 if (respuestaApi.isSuccessful) {
-                    _UsuariosConTareas.value = respuestaApi.body() ?: emptyList()
+                    _usuariosConTareas.value = respuestaApi.body() ?: emptyList()
 
                     // Filtrar usuarios para excluir al usuario actual
-                    _UsuariosConTareas.value =
-                        _UsuariosConTareas.value.filter { it._id != usuarioActualId.value }
+                    _usuariosConTareas.value =
+                        _usuariosConTareas.value.filter { it._id != idUsuarioActual.value }
 
 
-                    Log.d("AdminViewModel", "Usuarios con tareas: ${_UsuariosConTareas.value}")
+                    Log.d("AdminViewModel", "Usuarios con tareas: ${_usuariosConTareas.value}")
                 } else {
-                    _UsuariosConTareas.value = emptyList()
+                    _usuariosConTareas.value = emptyList()
                 }
             } catch (e: Exception) {
-                _UsuariosConTareas.value = emptyList()
+                _usuariosConTareas.value = emptyList()
                 Log.e("AdminViewModel", "Error al obtener usuarios con tareas: ${e.message}")
             } finally {
                 _usuariosCargando.value = false
