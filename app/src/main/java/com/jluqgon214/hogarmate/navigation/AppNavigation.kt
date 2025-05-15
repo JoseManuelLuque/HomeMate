@@ -5,14 +5,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.jluqgon214.hogarmate.components.AdminAnimatedBottomBar
-import com.jluqgon214.hogarmate.components.AnimatedBottomBar
 import com.jluqgon214.hogarmate.components.FAB
 import com.jluqgon214.hogarmate.components.PersistentBottomBar
 import com.jluqgon214.hogarmate.components.TopTittle
@@ -27,7 +23,6 @@ import com.jluqgon214.hogarmate.test.TestScreen
 import com.jluqgon214.hogarmate.viewModel.AdminViewModel
 import com.jluqgon214.hogarmate.viewModel.AppViewModel
 import com.jluqgon214.hogarmate.viewModel.LoginViewModel
-import com.jluqgon214.hogarmate.viewModel.NavigationViewModel
 import com.jluqgon214.hogarmate.viewModel.ProfileViewModel
 import com.jluqgon214.hogarmate.viewModel.RegisterViewModel
 import com.jluqgon214.hogarmate.viewModel.TasksViewModel
@@ -36,7 +31,6 @@ import com.jluqgon214.hogarmate.viewModel.ThemeViewModel
 @Composable
 fun AppNavigation(
     themeViewModel: ThemeViewModel,
-    navigaionViewModel: NavigationViewModel
 ) {
     // Navigation Controller
     val navController = rememberNavController()
@@ -46,7 +40,6 @@ fun AppNavigation(
     val registerViewModel = RegisterViewModel()
     val tasksViewModel = TasksViewModel()
     val profileViewModel = ProfileViewModel()
-    val navigaionViewModel = NavigationViewModel()
     val adminViewModel = AdminViewModel()
     val appViewModel = AppViewModel()
 
@@ -55,7 +48,7 @@ fun AppNavigation(
     val showFAB by appViewModel.showFAB.collectAsState()
     val showBottomBar by appViewModel.showBottomBar.collectAsState()
     val selectedBottomBarIndex by appViewModel.selectedBottomBarIndex.collectAsState()
-    val isAdmin by navigaionViewModel.isAdmin.collectAsState()
+    val isAdmin by adminViewModel.isAdmin.collectAsState()
 
     Scaffold(
         topBar = { TopTittle(texto = textoTop) },
@@ -65,6 +58,11 @@ fun AppNavigation(
             }, show = showFAB)
         },
         bottomBar = {
+            LaunchedEffect(Unit) {
+                // Comprobar si el usuario es administrador
+                adminViewModel.comprobarAdmin()
+            }
+
             PersistentBottomBar(
                 isAdmin = isAdmin,
                 showBottomBar = showBottomBar,
@@ -101,7 +99,7 @@ fun AppNavigation(
 
                 LaunchedEffect(Unit) {
                     // Comprobar si el usuario es administrador
-                    navigaionViewModel.comprobarAdmin()
+                    adminViewModel.comprobarAdmin()
                 }
             }
 
@@ -133,7 +131,7 @@ fun AppNavigation(
                 appViewModel.setShowBottomBar(true)
 
                 // Forzar la actualización de la barra inferior, porque al cambiar de tema se reinicia el estado de la misma
-                navigaionViewModel.comprobarAdmin()
+                adminViewModel.comprobarAdmin()
                 appViewModel.setSelectedBottomBarIndex(3)
 
                 SettingsScreen(
@@ -141,7 +139,7 @@ fun AppNavigation(
                     paddingValues = contentPadding,
                     navController = navController,
                     appViewModel = appViewModel,
-                    navigationViewModel = navigaionViewModel
+                    adminViewModel = adminViewModel
                 )
             }
 

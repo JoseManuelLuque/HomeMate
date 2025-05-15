@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.jluqgon214.hogarmate.navigation.AppNavigation
 import com.jluqgon214.hogarmate.ui.theme.HogarMateTheme
-import com.jluqgon214.hogarmate.viewModel.NavigationViewModel
+import com.jluqgon214.hogarmate.viewModel.AdminViewModel
 import com.jluqgon214.hogarmate.viewModel.ThemeViewModel
 
 class MainActivity : ComponentActivity() {
@@ -29,11 +29,9 @@ class MainActivity : ComponentActivity() {
 
             val isDarkTheme by themeViewModel.isDarkTheme.collectAsState()
 
-            val navigationViewModel = NavigationViewModel()
-
             // Aplicar el tema dinámico
             HogarMateTheme(darkTheme = isDarkTheme) {
-                AppNavigation(themeViewModel, navigationViewModel)
+                AppNavigation(themeViewModel)
             }
         }
     }
