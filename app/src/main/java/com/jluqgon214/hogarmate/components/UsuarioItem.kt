@@ -2,6 +2,7 @@ package com.jluqgon214.hogarmate.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,6 +19,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,6 +35,12 @@ import com.jluqgon214.hogarmate.viewModel.TasksViewModel
 @Composable
 fun UsuarioItem(usuario: UsuarioConTareasDTO, tasksViewModel: TasksViewModel, adminViewModel: AdminViewModel) {
     var expanded by remember { mutableStateOf(false) }
+
+    var actualizar by remember { mutableStateOf(false) }
+
+    SideEffect {
+        adminViewModel.obtenerUsuariosConTareas()
+    }
 
     Card(
         modifier = Modifier
@@ -50,7 +58,7 @@ fun UsuarioItem(usuario: UsuarioConTareasDTO, tasksViewModel: TasksViewModel, ad
                     .fillMaxWidth()
                     .padding(bottom = 8.dp),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = androidx.compose.foundation.layout.Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Column {
                     Text(
@@ -68,6 +76,7 @@ fun UsuarioItem(usuario: UsuarioConTareasDTO, tasksViewModel: TasksViewModel, ad
                     onClick = {
                         tasksViewModel.setAdminDialog(true)
                         tasksViewModel.setUsuario(usuario)
+                        actualizar = true
                     },
                     modifier = Modifier
                         .padding(start = 8.dp)
@@ -116,6 +125,7 @@ fun UsuarioItem(usuario: UsuarioConTareasDTO, tasksViewModel: TasksViewModel, ad
                                 onClick = {
                                     tasksViewModel.actualizarEstadoTarea(tarea._id)
                                     adminViewModel.obtenerUsuariosConTareas()
+                                    actualizar = true
 
                                 },
                                 modifier = Modifier.padding(top = 8.dp),
@@ -130,6 +140,7 @@ fun UsuarioItem(usuario: UsuarioConTareasDTO, tasksViewModel: TasksViewModel, ad
                                 onClick = {
                                     tasksViewModel.eliminarTarea(tarea._id)
                                     adminViewModel.obtenerUsuariosConTareas()
+                                    actualizar = true
                                 },
                                 modifier = Modifier.padding(top = 8.dp),
 

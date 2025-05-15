@@ -49,7 +49,7 @@ interface ApiService {
     fun crearTarea(@Body tarea: CrearTareaDTO): Call<Tarea>
 
     @DELETE("/tareas/delete/{id}")
-    suspend fun eliminarTarea(@Path("id") id: String?): Response<Unit>
+    suspend fun eliminarTarea(@Path("id") id: String?): Call<Unit>
 
     @PUT("/tareas/update/status/{id}")
     suspend fun actualizarEstadoTarea(@Path("id") id: String?): Call<Tarea>

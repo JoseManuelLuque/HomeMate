@@ -110,7 +110,7 @@ fun AppNavigation(
                 appViewModel.setShowFAB(true)
                 appViewModel.setShowBottomBar(true)
                 appViewModel.setSelectedBottomBarIndex(1)
-                TasksScreen(tasksViewModel = tasksViewModel, paddingValues = contentPadding)
+                TasksScreen(tasksViewModel = tasksViewModel, paddingValues = contentPadding, navController = navController)
             }
 
             composable("profileScreen") {

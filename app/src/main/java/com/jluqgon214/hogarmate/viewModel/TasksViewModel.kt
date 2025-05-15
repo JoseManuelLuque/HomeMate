@@ -53,7 +53,7 @@ class TasksViewModel : ViewModel() {
     private val _tareasCompletadas = MutableStateFlow<List<Tarea>>(emptyList())
     val tareasCompletadas: MutableStateFlow<List<Tarea>> = _tareasCompletadas
 
-    // Método para filtrar tareas
+
     fun filtrarTareas() {
         viewModelScope.launch {
             _tareasPendientes.value = _tareas.value.filter { !it.completada }
@@ -61,7 +61,7 @@ class TasksViewModel : ViewModel() {
         }
     }
 
-    // Método para obtener todas las tareas
+
     fun obtenerTareas() {
         viewModelScope.launch {
             try {
@@ -84,7 +84,7 @@ class TasksViewModel : ViewModel() {
         }
     }
 
-    // Método para agregar una tarea
+
     fun agregarTarea() {
         viewModelScope.launch {
             try {
@@ -113,7 +113,7 @@ class TasksViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     obtenerTareas() // Actualiza la lista de tareas después de agregar
                     Log.d(
-                        "PRUEBA",
+                        "TasksViewModel",
                         "Tarea agregada con éxito, Description: ${description.value}, Usuario: $idUsuario"
                     )
                 } else {
@@ -131,16 +131,21 @@ class TasksViewModel : ViewModel() {
     fun eliminarTarea(id: String?) {
         viewModelScope.launch {
             try {
-                val response = RetrofitClient.instance.eliminarTarea(id)
+                // Llamada a la API para eliminar la tarea
+                val response = RetrofitClient.instance.eliminarTarea(id).awaitResponse()
+
+                // Verificar si la respuesta es exitosa
                 if (response.isSuccessful) {
                     obtenerTareas() // Actualiza la lista de tareas después de eliminar
                 } else {
+                    // Log para verificar el error
                     Log.d(
                         "TasksViewModel",
                         "Error al eliminar tarea: ${response.errorBody()?.string()}"
                     )
                 }
             } catch (e: Exception) {
+                // Manejar excepciones de red y generar logs
                 Log.d("TasksViewModel", "Error al eliminar tarea: ${e.message}")
             }
         }
@@ -149,16 +154,21 @@ class TasksViewModel : ViewModel() {
     fun actualizarEstadoTarea(id: String?) {
         viewModelScope.launch {
             try {
+                // Llamada a la API para actualizar el estado de la tarea
                 val response = RetrofitClient.instance.actualizarEstadoTarea(id).awaitResponse()
+
+                // Verificar si la respuesta es exitosa
                 if (response.isSuccessful) {
                     obtenerTareas() // Actualiza la lista de tareas después de actualizar
                 } else {
+                    // Log para verificar el error
                     Log.d(
                         "TasksViewModel",
                         "Error al actualizar tarea: ${response.errorBody()?.string()}"
                     )
                 }
             } catch (e: Exception) {
+                // Manejar excepciones de red y generar logs
                 Log.d("TasksViewModel", "Error al actualizar tarea: ${e.message}")
             }
         }

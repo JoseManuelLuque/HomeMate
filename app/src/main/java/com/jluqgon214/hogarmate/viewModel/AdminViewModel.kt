@@ -16,7 +16,8 @@ class AdminViewModel : ViewModel() {
     private val _usuariosCargando = MutableStateFlow(false)
     val usuariosCargando = _usuariosCargando
 
-    var _usuarioActualId = MutableStateFlow<String?>(null) // Usuario que ha iniciado sesión y se encuentra usando al aplicacion
+    var _usuarioActualId =
+        MutableStateFlow<String?>(null) // Usuario que ha iniciado sesión y se encuentra usando al aplicacion
     val usuarioActualId = _usuarioActualId
 
     fun setUsuarioActualId(id: String) {
@@ -34,7 +35,8 @@ class AdminViewModel : ViewModel() {
                     _UsuariosConTareas.value = respuestaApi.body() ?: emptyList()
 
                     // Filtrar usuarios para excluir al usuario actual
-                    _UsuariosConTareas.value = _UsuariosConTareas.value.filter { it._id != usuarioActualId.value }
+                    _UsuariosConTareas.value =
+                        _UsuariosConTareas.value.filter { it._id != usuarioActualId.value }
 
 
                     Log.d("AdminViewModel", "Usuarios con tareas: ${_UsuariosConTareas.value}")

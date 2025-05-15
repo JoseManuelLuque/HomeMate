@@ -20,6 +20,7 @@ import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -30,15 +31,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import androidx.navigation.NavController
 import com.jluqgon214.hogarmate.components.AddTaskDialog
 import com.jluqgon214.hogarmate.components.CardTarea
 import com.jluqgon214.hogarmate.viewModel.TasksViewModel
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.util.Objects
+import kotlin.concurrent.thread
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TasksScreen(tasksViewModel: TasksViewModel, paddingValues: PaddingValues) {
+fun TasksScreen(tasksViewModel: TasksViewModel, paddingValues: PaddingValues, navController: NavController) {
     // val tareas by tasksViewModel.tareas.collectAsState()
     val tareasCargando by tasksViewModel.tareasCargando.collectAsState()
 
@@ -47,6 +52,10 @@ fun TasksScreen(tasksViewModel: TasksViewModel, paddingValues: PaddingValues) {
 
     LaunchedEffect(Unit) {
         tasksViewModel.obtenerTareas()
+    }
+
+    SideEffect {
+        if (tareasCargando){ tasksViewModel.obtenerTareas() }
     }
 
     val showDialog by tasksViewModel.showDialog.collectAsState()
@@ -94,7 +103,9 @@ fun TasksScreen(tasksViewModel: TasksViewModel, paddingValues: PaddingValues) {
             item {
 
                 Row(
-                    modifier = Modifier.fillMaxWidth().padding(8.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center
                 )
@@ -104,7 +115,9 @@ fun TasksScreen(tasksViewModel: TasksViewModel, paddingValues: PaddingValues) {
                         thickness = 4.dp,
                         color = MaterialTheme.colorScheme.primary
                     )
-                    Text("Tareas Pendientes", Modifier.weight(2f).wrapContentWidth())
+                    Text("Tareas Pendientes", Modifier
+                        .weight(2f)
+                        .wrapContentWidth())
                     HorizontalDivider(
                         modifier = Modifier.weight(1f),
                         thickness = 4.dp,
@@ -119,10 +132,11 @@ fun TasksScreen(tasksViewModel: TasksViewModel, paddingValues: PaddingValues) {
                         tarea, tarea.usuario.username, {
                             tasksViewModel.actualizarEstadoTarea(tarea._id)
                             tasksViewModel.obtenerTareas()
+                            navController.navigate("tasksScreen")
                         }, {
                             tasksViewModel.eliminarTarea(tarea._id)
                             tasksViewModel.obtenerTareas()
-
+                            navController.navigate("tasksScreen")
                         }
                     )
 
@@ -135,7 +149,9 @@ fun TasksScreen(tasksViewModel: TasksViewModel, paddingValues: PaddingValues) {
             item {
 
                 Row(
-                    modifier = Modifier.fillMaxWidth().padding(8.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center
                 )
@@ -145,7 +161,9 @@ fun TasksScreen(tasksViewModel: TasksViewModel, paddingValues: PaddingValues) {
                         thickness = 4.dp,
                         color = MaterialTheme.colorScheme.primary
                     )
-                    Text("Tareas Completadas", Modifier.weight(2f).wrapContentWidth())
+                    Text("Tareas Completadas", Modifier
+                        .weight(2f)
+                        .wrapContentWidth())
                     HorizontalDivider(
                         modifier = Modifier.weight(1f),
                         thickness = 4.dp,
@@ -160,10 +178,12 @@ fun TasksScreen(tasksViewModel: TasksViewModel, paddingValues: PaddingValues) {
                         tarea, tarea.usuario.username, {
                             tasksViewModel.actualizarEstadoTarea(tarea._id)
                             tasksViewModel.obtenerTareas()
+                            navController.navigate("tasksScreen")
 
                         }, {
                             tasksViewModel.eliminarTarea(tarea._id)
                             tasksViewModel.obtenerTareas()
+                            navController.navigate("tasksScreen")
 
                         }
                     )

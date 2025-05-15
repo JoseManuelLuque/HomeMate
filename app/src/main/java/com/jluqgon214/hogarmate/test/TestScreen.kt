@@ -50,13 +50,12 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TestScreen(tasksViewModel: TasksViewModel, paddingValues: PaddingValues) {
-    var expanded = remember { mutableStateOf(false) }
+    remember { mutableStateOf(false) }
 
     val tareas by tasksViewModel.tareas.collectAsState()
-    val tareasCargando by tasksViewModel.tareasCargando.collectAsState()
 
-    val tareasPendientes = tareas.filter { !it.completada }
-    val tareasCompletadas = tareas.filter { it.completada }
+    tareas.filter { !it.completada }
+    tareas.filter { it.completada }
 
     LaunchedEffect(Unit) {
         tasksViewModel.obtenerTareas()

@@ -135,14 +135,12 @@ fun CardTarea(
                     if (task.completada) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.Redo,
-                            contentDescription = "Completar tarea",
-                            tint = Color.Green
+                            contentDescription = "Completar tarea"
                         )
                     } else {
                         Icon(
                             imageVector = Icons.Default.Check,
-                            contentDescription = "Desacer completar tarea",
-                            tint = Color.Green
+                            contentDescription = "Desacer completar tarea"
                         )
                     }
 

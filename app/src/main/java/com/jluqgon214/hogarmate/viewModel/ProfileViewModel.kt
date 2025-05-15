@@ -11,8 +11,6 @@ import kotlinx.coroutines.launch
 import retrofit2.awaitResponse
 
 class ProfileViewModel : ViewModel() {
-    private val apiService = RetrofitClient.instance
-
     private val _usuario = MutableStateFlow<Usuario?>(null)
     val usuario: StateFlow<Usuario?> = _usuario
 
@@ -43,16 +41,28 @@ class ProfileViewModel : ViewModel() {
     fun obtenerUsuario() {
         viewModelScope.launch {
             try {
-                val response = apiService.obtenerUsuario().awaitResponse()
+                // Llamada a la API para obtener el usuario
+                val response = RetrofitClient.instance.obtenerUsuario().awaitResponse()
+
+                // Log para verificar la respuesta
                 Log.d("ProfileViewModel", "Response: $response")
+
+                // Verificar si la respuesta es exitosa
                 if (response.isSuccessful) {
+                    // Asignar el usuario obtenido a la variable de estado
                     _usuario.value = response.body()
                 } else {
+                    // Manejar el error de la respuesta
                     _errorMessage.value = "Error al obtener usuario: ${response.message()}"
+
+                    // Log para verificar el error
                     Log.e("ProfileViewModel", "Error al obtener usuario: ${response.message()}")
                 }
             } catch (e: Exception) {
+                // Manejar excepciones de red
                 _errorMessage.value = "Error de red: ${e.message}"
+
+                // Log para verificar la excepción
                 Log.e("ProfileViewModel", "Error de red: ${e.message}")
             }
         }
@@ -61,6 +71,7 @@ class ProfileViewModel : ViewModel() {
     fun actualizarUsuario() {
         viewModelScope.launch {
             try {
+                // Crear un objeto Usuario con los datos actualizados
                 val usuarioActualizado = Usuario(
                     _usuario.value?._id ?: "",
                     _username.value,
@@ -69,14 +80,26 @@ class ProfileViewModel : ViewModel() {
                     _usuario.value?.roles ?: "",
                     _usuario.value?.hogar
                 )
-                val response = apiService.actualizarUsuario(usuarioActualizado).awaitResponse()
+
+                // Llamada a la API para actualizar el usuario
+                val response = RetrofitClient.instance.actualizarUsuario(usuarioActualizado).awaitResponse()
+
+                // Si la respuesta es exitosa, actualiza el flujo de estado con el usuario actualizado
                 if (response.isSuccessful) {
                     _usuario.value = response.body()
                 } else {
+                    // Manejar el error de la respuesta
                     _errorMessage.value = "Error al actualizar usuario: ${response.message()}"
+
+                    // Log para verificar el error
+                    Log.e("ProfileViewModel", "Error al actualizar usuario: ${response.message()}")
                 }
             } catch (e: Exception) {
+                // Manejar excepciones de red
                 _errorMessage.value = "Error de red: ${e.message}"
+
+                // Log para verificar la excepción
+                Log.e("ProfileViewModel", "Error de red: ${e.message}")
             }
         }
     }
