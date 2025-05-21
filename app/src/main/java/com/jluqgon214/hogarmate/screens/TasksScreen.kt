@@ -10,21 +10,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.pulltorefresh.PullToRefreshBox
-import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -33,7 +26,6 @@ import androidx.navigation.NavController
 import com.jluqgon214.hogarmate.components.AddTaskDialog
 import com.jluqgon214.hogarmate.components.CardTarea
 import com.jluqgon214.hogarmate.viewModel.TasksViewModel
-import kotlinx.coroutines.launch
 
 /**
  * # Pantalla de tareas.
@@ -46,7 +38,6 @@ import kotlinx.coroutines.launch
  * @param paddingValues Espaciado externo aplicado a los elementos de la pantalla.
  * @param navController Controlador de navegación para gestionar la navegación entre pantallas.
  */
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TasksScreen(
     tasksViewModel: TasksViewModel,
@@ -94,117 +85,99 @@ fun TasksScreen(
         }
     }
 
-    // Estado y lógica para la funcionalidad de "pull-to-refresh".
-    var isRefreshing by remember { mutableStateOf(false) }
-    val state = rememberPullToRefreshState()
-    val coroutineScope = rememberCoroutineScope()
-    val onRefresh: () -> Unit = {
-        isRefreshing = true
-        coroutineScope.launch {
-            tasksViewModel.obtenerTareas()
-            isRefreshing = false
-        }
-    }
-
-    // Contenedor principal con funcionalidad de "pull-to-refresh".
-    PullToRefreshBox(
-        state = state,
-        isRefreshing = isRefreshing,
-        onRefresh = onRefresh,
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(paddingValues)
     ) {
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-        ) {
-            // Sección de tareas pendientes.
+        // Sección de tareas pendientes.
+        item {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ) {
+                HorizontalDivider(
+                    modifier = Modifier.weight(1f),
+                    thickness = 4.dp,
+                    color = MaterialTheme.colorScheme.primary
+                )
+                Text(
+                    "Tareas Pendientes", Modifier
+                        .weight(2f)
+                        .wrapContentWidth()
+                )
+                HorizontalDivider(
+                    modifier = Modifier.weight(1f),
+                    thickness = 4.dp,
+                    color = MaterialTheme.colorScheme.primary
+                )
+            }
+        }
+        for (tarea in tareasPendientes) {
             item {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(8.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    HorizontalDivider(
-                        modifier = Modifier.weight(1f),
-                        thickness = 4.dp,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                    Text(
-                        "Tareas Pendientes", Modifier
-                            .weight(2f)
-                            .wrapContentWidth()
-                    )
-                    HorizontalDivider(
-                        modifier = Modifier.weight(1f),
-                        thickness = 4.dp,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                }
+                CardTarea(
+                    tarea, tarea.usuario.username, {
+                        tasksViewModel.actualizarEstadoTarea(tarea._id)
+                        tasksViewModel.obtenerTareas()
+                        navController.navigate("tasksScreen")
+                    }, {
+                        tasksViewModel.eliminarTarea(tarea._id)
+                        tasksViewModel.obtenerTareas()
+                        navController.navigate("tasksScreen")
+                    }
+                )
             }
-            for (tarea in tareasPendientes) {
-                item {
-                    CardTarea(
-                        tarea, tarea.usuario.username, {
-                            tasksViewModel.actualizarEstadoTarea(tarea._id)
-                            tasksViewModel.obtenerTareas()
-                            navController.navigate("tasksScreen")
-                        }, {
-                            tasksViewModel.eliminarTarea(tarea._id)
-                            tasksViewModel.obtenerTareas()
-                            navController.navigate("tasksScreen")
-                        }
-                    )
-                }
-            }
+        }
 
-            // Separador entre secciones.
-            item {
-                HorizontalDivider()
-            }
+        // Separador entre secciones.
+        item {
+            HorizontalDivider()
+        }
 
-            // Sección de tareas completadas.
-            item {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(8.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    HorizontalDivider(
-                        modifier = Modifier.weight(1f),
-                        thickness = 4.dp,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                    Text(
-                        "Tareas Completadas", Modifier
-                            .weight(2f)
-                            .wrapContentWidth()
-                    )
-                    HorizontalDivider(
-                        modifier = Modifier.weight(1f),
-                        thickness = 4.dp,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                }
+        // Sección de tareas completadas.
+        item {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ) {
+                HorizontalDivider(
+                    modifier = Modifier.weight(1f),
+                    thickness = 4.dp,
+                    color = MaterialTheme.colorScheme.primary
+                )
+                Text(
+                    "Tareas Completadas", Modifier
+                        .weight(2f)
+                        .wrapContentWidth()
+                )
+                HorizontalDivider(
+                    modifier = Modifier.weight(1f),
+                    thickness = 4.dp,
+                    color = MaterialTheme.colorScheme.primary
+                )
             }
-            for (tarea in tareasCompletadas) {
-                item {
-                    CardTarea(
-                        tarea, tarea.usuario.username, {
-                            tasksViewModel.actualizarEstadoTarea(tarea._id)
-                            tasksViewModel.obtenerTareas()
-                            navController.navigate("tasksScreen")
-                        }, {
-                            tasksViewModel.eliminarTarea(tarea._id)
-                            tasksViewModel.obtenerTareas()
-                            navController.navigate("tasksScreen")
-                        }
-                    )
-                }
+        }
+        for (tarea in tareasCompletadas) {
+            item {
+                CardTarea(
+                    tarea, tarea.usuario.username, {
+                        tasksViewModel.actualizarEstadoTarea(tarea._id)
+                        tasksViewModel.obtenerTareas()
+                        navController.navigate("tasksScreen")
+                    }, {
+                        tasksViewModel.eliminarTarea(tarea._id)
+                        tasksViewModel.obtenerTareas()
+                        navController.navigate("tasksScreen")
+                    }
+                )
             }
         }
     }
+
 }

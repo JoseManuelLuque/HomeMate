@@ -61,7 +61,7 @@ fun UsuarioItem(
 
     Card(
         modifier = Modifier
-            .fillMaxWidth() // El ancho del componente ocupa todo el espacio disponible.
+            .fillMaxWidth() // El ancho del componente ocupa el espacio disponible.
             .padding(8.dp) // Espaciado externo del componente.
             .clickable { expanded = !expanded }, // Alterna el estado expandido al hacer clic.
         shape = androidx.compose.foundation.shape.RoundedCornerShape(16.dp), // Forma redondeada de la tarjeta.
