@@ -54,6 +54,7 @@ package com.jluqgon214.hogarmate.screens
         // Efecto lanzado al inicializar la pantalla para obtener el usuario actual y cargar los datos necesarios.
         LaunchedEffect(Unit) {
             profileViewModel.obtenerUsuario()
+            // Observa el usuario actual y, si está disponible, establece su ID en el ViewModel de administración.
             profileViewModel.usuario.collect { usuario ->
                 usuario?._id?.let { id ->
                     adminViewModel.setUsuarioActualId(id)

@@ -19,7 +19,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -54,8 +54,8 @@ fun UsuarioItem(
     // Estado que indica si se debe actualizar la lista de usuarios y tareas.
     var actualizar by remember { mutableStateOf(false) }
 
-    // Efecto secundario para obtener la lista de usuarios con tareas al inicializar el componente.
-    SideEffect {
+    // Efecto para obtener la lista de usuarios con tareas al inicializar el componente.
+    LaunchedEffect(Unit) {
         adminViewModel.obtenerUsuariosConTareas()
     }
 
