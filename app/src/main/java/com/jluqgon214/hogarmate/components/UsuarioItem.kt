@@ -32,27 +32,44 @@ import com.jluqgon214.hogarmate.model.DTO.UsuarioConTareasDTO
 import com.jluqgon214.hogarmate.viewModel.AdminViewModel
 import com.jluqgon214.hogarmate.viewModel.TasksViewModel
 
+/**
+ * # Componente que representa un elemento de usuario con sus tareas asociadas.
+ *
+ * Este componente muestra información básica del usuario, como su nombre de usuario y correo electrónico,
+ * y permite expandir para ver y gestionar las tareas asociadas al usuario.
+ *
+ * @param usuario Objeto que contiene la información del usuario y sus tareas.
+ * @param tasksViewModel ViewModel que gestiona las acciones relacionadas con las tareas.
+ * @param adminViewModel ViewModel que gestiona las acciones relacionadas con los usuarios y sus tareas.
+ */
 @Composable
-fun UsuarioItem(usuario: UsuarioConTareasDTO, tasksViewModel: TasksViewModel, adminViewModel: AdminViewModel) {
+fun UsuarioItem(
+    usuario: UsuarioConTareasDTO,
+    tasksViewModel: TasksViewModel,
+    adminViewModel: AdminViewModel
+) {
+    // Estado que controla si el contenido expandido está visible.
     var expanded by remember { mutableStateOf(false) }
 
+    // Estado que indica si se debe actualizar la lista de usuarios y tareas.
     var actualizar by remember { mutableStateOf(false) }
 
+    // Efecto secundario para obtener la lista de usuarios con tareas al inicializar el componente.
     SideEffect {
         adminViewModel.obtenerUsuariosConTareas()
     }
 
     Card(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp)
-            .clickable { expanded = !expanded },
-        shape = androidx.compose.foundation.shape.RoundedCornerShape(16.dp),
-        elevation = androidx.compose.material3.CardDefaults.cardElevation(8.dp)
+            .fillMaxWidth() // El ancho del componente ocupa todo el espacio disponible.
+            .padding(8.dp) // Espaciado externo del componente.
+            .clickable { expanded = !expanded }, // Alterna el estado expandido al hacer clic.
+        shape = androidx.compose.foundation.shape.RoundedCornerShape(16.dp), // Forma redondeada de la tarjeta.
+        elevation = androidx.compose.material3.CardDefaults.cardElevation(8.dp) // Elevación de la tarjeta.
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
 
-            // Usuario y email en grande
+            // Sección que muestra el nombre de usuario y el correo electrónico.
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -62,20 +79,20 @@ fun UsuarioItem(usuario: UsuarioConTareasDTO, tasksViewModel: TasksViewModel, ad
             ) {
                 Column {
                     Text(
-                        text = usuario.username,
+                        text = usuario.username, // Nombre de usuario.
                         style = MaterialTheme.typography.headlineMedium,
                         color = MaterialTheme.colorScheme.primary
                     )
                     Text(
-                        text = usuario.email,
+                        text = usuario.email, // Correo electrónico del usuario.
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
                 IconButton(
                     onClick = {
-                        tasksViewModel.setAdminDialog(true)
-                        tasksViewModel.setUsuario(usuario)
+                        tasksViewModel.setAdminDialog(true) // Abre el diálogo de administración.
+                        tasksViewModel.setUsuario(usuario) // Establece el usuario seleccionado.
                         actualizar = true
                     },
                     modifier = Modifier
@@ -83,13 +100,13 @@ fun UsuarioItem(usuario: UsuarioConTareasDTO, tasksViewModel: TasksViewModel, ad
                         .align(Alignment.CenterVertically)
                 ) {
                     Icon(
-                        imageVector = Icons.Default.Add,
+                        imageVector = Icons.Default.Add, // Ícono para agregar o editar.
                         contentDescription = "Eliminar Usuario"
                     )
                 }
             }
 
-            // Contenido expandido
+            // Contenido expandido que muestra las tareas del usuario.
             if (expanded) {
                 Column(
                     modifier = Modifier
@@ -103,7 +120,7 @@ fun UsuarioItem(usuario: UsuarioConTareasDTO, tasksViewModel: TasksViewModel, ad
                 ) {
                     Row {
                         Text(
-                            text = "Tareas:",
+                            text = "Tareas:", // Título de la sección de tareas.
                             style = MaterialTheme.typography.titleLarge,
                             color = MaterialTheme.colorScheme.primary
                         )
@@ -116,37 +133,34 @@ fun UsuarioItem(usuario: UsuarioConTareasDTO, tasksViewModel: TasksViewModel, ad
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Text(
-                                text = "- ${tarea.descripcion} (${if (tarea.completada) "Completada" else "Pendiente"})",
+                                text = "- ${tarea.descripcion} (${if (tarea.completada) "Completada" else "Pendiente"})", // Nombre de la tarea y muestra si esta completada o no.
                                 style = MaterialTheme.typography.bodyLarge,
                                 color = MaterialTheme.colorScheme.onSurface,
                                 textAlign = TextAlign.Center
                             )
                             IconButton(
                                 onClick = {
-                                    tasksViewModel.actualizarEstadoTarea(tarea._id)
-                                    adminViewModel.obtenerUsuariosConTareas()
+                                    tasksViewModel.actualizarEstadoTarea(tarea._id) // Cambia el estado de la tarea.
+                                    adminViewModel.obtenerUsuariosConTareas() // Actualiza la lista de usuarios y tareas.
                                     actualizar = true
-
                                 },
                                 modifier = Modifier.padding(top = 8.dp),
-
-                                ) {
+                            ) {
                                 Icon(
-                                    imageVector = icon,
+                                    imageVector = icon, // Ícono que representa el estado de la tarea.
                                     contentDescription = "Eliminar Tarea"
                                 )
                             }
                             IconButton(
                                 onClick = {
-                                    tasksViewModel.eliminarTarea(tarea._id)
-                                    adminViewModel.obtenerUsuariosConTareas()
+                                    tasksViewModel.eliminarTarea(tarea._id) // Elimina la tarea.
+                                    adminViewModel.obtenerUsuariosConTareas() // Actualiza la lista de usuarios y tareas.
                                     actualizar = true
                                 },
                                 modifier = Modifier.padding(top = 8.dp),
-
-                                ) {
+                            ) {
                                 Icon(
-                                    imageVector = Icons.Default.Delete,
+                                    imageVector = Icons.Default.Delete, // Ícono para eliminar la tarea.
                                     contentDescription = "Eliminar Tarea"
                                 )
                             }

@@ -43,6 +43,17 @@ import com.jluqgon214.hogarmate.model.Tarea
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+/**
+ * # Componente que representa una tarjeta de tarea interactiva.
+ *
+ * Este componente permite mostrar información de una tarea, asignarla a un usuario,
+ * completarla o eliminarla mediante gestos de deslizamiento.
+ *
+ * @param task Objeto que contiene la información de la tarea.
+ * @param assignedUser Nombre del usuario asignado a la tarea.
+ * @param onComplete Callback que se ejecuta al marcar la tarea como completada o deshacer su completado.
+ * @param onDelete Callback que se ejecuta al eliminar la tarea.
+ */
 @Composable
 fun CardTarea(
     task: Tarea,
@@ -50,18 +61,23 @@ fun CardTarea(
     onComplete: () -> Unit,
     onDelete: () -> Unit
 ) {
+    // Estado que controla el desplazamiento horizontal de la tarjeta.
     var offsetX by remember { mutableFloatStateOf(0f) }
+    // Estado que indica si la tarjeta ha sido deslizada completamente.
     var isSwiped by remember { mutableStateOf(false) }
+    // Animación para el desplazamiento horizontal.
     val animatedOffsetX by animateFloatAsState(
         targetValue = offsetX,
         animationSpec = tween(durationMillis = 300),
         label = "Swipe Animation"
     )
+    // Alcance de la corrutina para manejar acciones asincrónicas.
     val coroutineScope = rememberCoroutineScope()
 
+    // Efecto lanzado al deslizar completamente la tarjeta para eliminarla.
     if (isSwiped) {
         LaunchedEffect(Unit) {
-            delay(300) // Espera la animación antes de eliminar la tarea
+            delay(300) // Espera la animación antes de ejecutar la acción de eliminación.
             onDelete()
         }
     }
@@ -71,13 +87,16 @@ fun CardTarea(
             .fillMaxWidth()
             .padding(8.dp)
     ) {
-        // 🔴 Fondo rojo con icono de papelera
+        // Fondo rojo con ícono de papelera, visible al deslizar la tarjeta.
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.Red, RoundedCornerShape(16.dp))
+                .background(
+                    Color.Red,
+                    RoundedCornerShape(16.dp)
+                ) // Fondo rojo con bordes redondeados.
                 .padding(16.dp),
-            contentAlignment = Alignment.CenterEnd // Ubicar el icono a la derecha
+            contentAlignment = Alignment.CenterEnd
         ) {
             Icon(
                 imageVector = Icons.Default.Delete,
@@ -89,7 +108,7 @@ fun CardTarea(
             )
         }
 
-        // 🟢 Tarjeta de tarea
+        // Tarjeta principal que muestra la información de la tarea.
         Card(
             colors = CardColors(
                 containerColor = MaterialTheme.colorScheme.primaryContainer,
@@ -97,25 +116,25 @@ fun CardTarea(
                 disabledContentColor = MaterialTheme.colorScheme.onSurface,
                 disabledContainerColor = MaterialTheme.colorScheme.surface
             ),
-            shape = RoundedCornerShape(16.dp),
-            elevation = CardDefaults.elevatedCardElevation(defaultElevation = 4.dp),
+            shape = RoundedCornerShape(16.dp), // Bordes redondeados de la tarjeta.
+            elevation = CardDefaults.elevatedCardElevation(defaultElevation = 4.dp), // Elevación de la tarjeta.
             modifier = Modifier
-                .fillMaxWidth()
-                .offset(x = animatedOffsetX.dp) // Aplica la animación de desplazamiento
+                .fillMaxWidth() // La tarjeta ocupa todo el ancho disponible.
+                .offset(x = animatedOffsetX.dp) // Aplica la animación de desplazamiento.
                 .pointerInput(Unit) {
                     detectHorizontalDragGestures(
                         onDragEnd = {
-                            if (offsetX < -300) { // Si el swipe es lo suficientemente fuerte
+                            if (offsetX < -300) { // Si el deslizamiento es lo suficientemente fuerte.
                                 coroutineScope.launch {
-                                    offsetX = -500f // Desliza fuera de la pantalla
-                                    isSwiped = true
+                                    offsetX = -500f // Desliza fuera de la pantalla.
+                                    isSwiped = true // Marca la tarjeta como deslizada.
                                 }
                             } else {
-                                offsetX = 0f // Si no, regresa a su posición inicial
+                                offsetX = 0f // Si no, regresa a su posición inicial.
                             }
                         }
                     ) { _, dragAmount ->
-                        if (dragAmount < 0) { // Solo permite swipe a la izquierda
+                        if (dragAmount < 0) { // Solo permite deslizamiento hacia la izquierda.
                             offsetX += dragAmount
                         }
                     }
@@ -125,11 +144,18 @@ fun CardTarea(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.SpaceBetween // Distribuye los elementos horizontalmente.
             ) {
                 Column {
-                    Text(text = task.descripcion, fontSize = 18.sp)
-                    Text(text = "Asignado a: $assignedUser", fontSize = 14.sp, color = Color.Gray)
+                    Text(
+                        text = task.descripcion, // Nombre de la tarea.
+                        fontSize = 18.sp
+                    )
+                    Text(
+                        text = "Asignado a: $assignedUser", // Usuario asignado.
+                        fontSize = 14.sp,
+                        color = Color.Gray
+                    )
                 }
                 IconButton(onClick = onComplete) {
                     if (task.completada) {
@@ -140,10 +166,9 @@ fun CardTarea(
                     } else {
                         Icon(
                             imageVector = Icons.Default.Check,
-                            contentDescription = "Desacer completar tarea"
+                            contentDescription = "Deshacer completar tarea"
                         )
                     }
-
                 }
             }
         }

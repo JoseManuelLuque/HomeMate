@@ -54,11 +54,5 @@ fun SettingsScreen(themeViewModel: ThemeViewModel, paddingValues: PaddingValues,
                 size = 60.dp
             )
         }
-
-        CustomButton(
-            onClick = { navController.navigate("testScreen")}
-        ) {
-            Text("Test Screen")
-        }
     }
 }

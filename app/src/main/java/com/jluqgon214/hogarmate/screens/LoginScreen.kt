@@ -23,51 +23,70 @@ import com.jluqgon214.hogarmate.components.CustomButton
 import com.jluqgon214.hogarmate.components.CustomTextField
 import com.jluqgon214.hogarmate.viewModel.LoginViewModel
 
+/**
+ * # Pantalla de inicio de sesión.
+ *
+ * Esta pantalla permite al usuario iniciar sesión proporcionando su correo electrónico y contraseña.
+ * También incluye un botón para navegar a la pantalla de registro.
+ *
+ * @param loginViewModel ViewModel que gestiona la lógica de inicio de sesión.
+ * @param navController Controlador de navegación para gestionar la navegación entre pantallas.
+ */
 @Composable
 fun LoginScreen(loginViewModel: LoginViewModel, navController: NavController) {
+    // Variables de estado observadas desde el ViewModel.
     val email by loginViewModel.email.collectAsState()
     val password by loginViewModel.password.collectAsState()
     val errorMessage by loginViewModel.errorMessage.collectAsState()
     val loginCorrecto by loginViewModel.loginCorrecto.collectAsState()
     val isLoading by loginViewModel.isLoading.collectAsState()
+
+    // Contenedor principal de la pantalla.
     Column(
         modifier = Modifier
             .padding(16.dp)
             .fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        verticalArrangement = Arrangement.Center, // Centra los elementos verticalmente.
+        horizontalAlignment = Alignment.CenterHorizontally // Centra los elementos horizontalmente.
     ) {
-
+        // Muestra un mensaje de error si existe.
         errorMessage?.let {
             Text(it, color = MaterialTheme.colorScheme.error)
         }
+
+        // Campo de texto para el correo electrónico.
         CustomTextField(
             value = email,
             onValueChange = { loginViewModel.setEmail(it) },
             label = "Correo Electrónico",
             placeholder = "Escribe tu correo"
         )
+
+        // Campo de texto para la contraseña.
         CustomTextField(
             value = password,
             onValueChange = { loginViewModel.setPassword(it) },
             label = "Contraseña",
             placeholder = "Escribe tu contraseña"
         )
+
+        // Fila con botones para iniciar sesión y registrarse.
         Row(
             modifier = Modifier
                 .padding(16.dp)
                 .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
+            horizontalArrangement = Arrangement.SpaceBetween // Espacia los botones uniformemente.
         ) {
+            // Botón para iniciar sesión.
             CustomButton(
                 onClick = {
-                    // Reseteamos el mensaje de error para que se actualice
+                    // Resetea el mensaje de error antes de intentar iniciar sesión.
                     loginViewModel.setErrorMessage(null)
-
                     loginViewModel.login()
                 },
                 content = {
                     if (isLoading) {
+                        // Muestra un indicador de carga si el inicio de sesión está en progreso.
                         CircularProgressIndicator(
                             modifier = Modifier.testTag("CircularProgressIndicator"),
                             color = Color.White
@@ -77,6 +96,8 @@ fun LoginScreen(loginViewModel: LoginViewModel, navController: NavController) {
                     }
                 }
             )
+
+            // Botón para navegar a la pantalla de registro.
             CustomButton(
                 onClick = {
                     navController.navigate("registerScreen")
@@ -88,16 +109,16 @@ fun LoginScreen(loginViewModel: LoginViewModel, navController: NavController) {
         }
     }
 
-    // Observa los cambios en loginCorrecto y navega si es true
+    // Efecto lanzado para observar cambios en el estado de inicio de sesión.
     LaunchedEffect(loginCorrecto) {
         if (loginCorrecto) {
-            // Guardamos el JWT en una variable para usarlo más tarde
+            // Guarda el token JWT para su uso posterior.
             loginViewModel.setJWT(loginViewModel.loginResponse.value?.token)
 
-            // Borrar el trazo de navegación para que no se pueda volver acceder a la pantalla de inicio de sesión a no ser que se cierre la sesión
+            // Limpia el historial de navegación para evitar volver a la pantalla de inicio de sesión.
             navController.popBackStack()
 
-            // Navegar a la pantalla de inicio
+            // Navega a la pantalla principal.
             navController.navigate("homeScreen")
         }
     }

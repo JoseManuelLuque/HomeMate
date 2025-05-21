@@ -25,6 +25,14 @@ import com.exyte.animatednavbar.animation.balltrajectory.Straight
 import com.exyte.animatednavbar.animation.indendshape.Height
 import com.exyte.animatednavbar.utils.noRippleClickable
 
+/**
+ * # Composable que muestra una barra de navegación inferior animada para el usuario que es administrador.
+ *
+ * @param show Indica si la barra debe mostrarse o no.
+ * @param selectedIndex Índice del elemento actualmente seleccionado.
+ * @param onItemSelected Callback que se ejecuta cuando se selecciona un elemento, recibe el índice del elemento.
+ * @param onNavigate Callback que se ejecuta para navegar al elemento seleccionado, recibe el índice del elemento.
+ */
 @Composable
 fun AdminAnimatedBottomBar(
     show: Boolean,
@@ -32,7 +40,7 @@ fun AdminAnimatedBottomBar(
     onItemSelected: (Int) -> Unit,
     onNavigate: (Int) -> Unit
 ) {
-    val navigationBarItems = remember { AdminNavegationBarItems.values().toList() }
+    val navigationBarItems = remember { AdminNavegationBarItems.entries }
 
     if (show) {
         AnimatedNavigationBar(
@@ -65,6 +73,11 @@ fun AdminAnimatedBottomBar(
     }
 }
 
+/**
+ * Enum class que representa los elementos de la barra de navegación inferior
+ *
+ * @param icon El icono que se mostrará para cada elemento
+ */
 enum class AdminNavegationBarItems(val icon: ImageVector) {
     Home(Icons.Filled.Home),
     Tasks(Icons.Filled.Check),

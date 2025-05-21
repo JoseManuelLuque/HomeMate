@@ -1,6 +1,5 @@
 package com.jluqgon214.hogarmate.components
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -20,26 +19,30 @@ import com.jluqgon214.hogarmate.model.DTO.UsuarioConTareasDTO
 import com.jluqgon214.hogarmate.viewModel.AdminViewModel
 import com.jluqgon214.hogarmate.viewModel.TasksViewModel
 
+/**
+ * # Diálogo para agregar una nueva tarea, ya sea para el usuario actual o para un usuario específico.
+ */
 @Composable
 fun AddTaskDialog(
     tasksViewModel: TasksViewModel,
     adminViewModel: AdminViewModel?,
     usuario: UsuarioConTareasDTO?
 ) {
+    // Estado que contiene la descripción de la tarea.
     val description = tasksViewModel.description.collectAsState().value
 
-    Log.d("Dialog", "idUsuario: ${usuario?._id}")
-
     AlertDialog(
-        onDismissRequest = { tasksViewModel.setShowDialog(false) },
+        onDismissRequest = { tasksViewModel.setShowDialog(false) }, // Acción al cerrar el diálogo.
         title = {
             if (usuario == null) {
+                // Título del diálogo para el usuario actual.
                 Text(
                     text = "Agregar Tarea",
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold
                 )
             } else {
+                // Título del diálogo para un usuario específico.
                 Text(
                     text = "Agregar Tarea a Usuario ${usuario.username}",
                     fontSize = 20.sp,
@@ -51,6 +54,7 @@ fun AddTaskDialog(
             Column(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
+                // Campo de texto personalizado para ingresar la descripción de la tarea.
                 CustomTextField(
                     label = "Descripción de la tarea",
                     value = description,
@@ -62,12 +66,15 @@ fun AddTaskDialog(
             }
         },
         confirmButton = {
+            // Botón para confirmar la acción de agregar tarea.
             AlertButton(
                 onClick = {
                     if (usuario == null) {
+                        // Agrega la tarea al usuario actual.
                         tasksViewModel.agregarTarea()
                         tasksViewModel.setShowDialog(false)
                     } else {
+                        // Agrega la tarea a un usuario específico.
                         tasksViewModel.agregarTareaUsuario(usuario._id)
                         tasksViewModel.setAdminDialog(false)
                         adminViewModel?.obtenerUsuariosConTareas()
@@ -75,10 +82,11 @@ fun AddTaskDialog(
                 },
                 text = "Agregar",
                 textColor = MaterialTheme.colorScheme.primary,
-                enabled = description.isNotBlank() // Botón habilitado solo si la descripción no está vacía
+                enabled = description.isNotBlank() // Habilita el botón solo si la descripción no está vacía.
             )
         },
         dismissButton = {
+            // Botón para cancelar la acción y cerrar el diálogo.
             AlertButton(
                 onClick = {
                     if (usuario == null) {
@@ -94,7 +102,7 @@ fun AddTaskDialog(
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp),
-        shape = RoundedCornerShape(16.dp),
-        tonalElevation = 6.dp
+        shape = RoundedCornerShape(16.dp), // Bordes redondeados del diálogo.
+        tonalElevation = 6.dp // Elevación tonal para el efecto de sombra.
     )
 }

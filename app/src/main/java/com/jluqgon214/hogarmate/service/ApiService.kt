@@ -17,6 +17,11 @@ import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
 
+/**
+ * # Interfaz que define los endpoints de la API REST.
+ *
+ * Contiene las funciones que se utilizarán para realizar las peticiones a la API.
+ */
 interface ApiService {
 
     // USUARIOS

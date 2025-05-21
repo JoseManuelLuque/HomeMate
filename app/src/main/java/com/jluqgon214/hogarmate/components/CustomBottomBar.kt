@@ -2,8 +2,12 @@ package com.jluqgon214.hogarmate.components
 
 import androidx.compose.runtime.Composable
 
+/**
+ * # Componente de barra inferior personalizada que cambia según el rol del usuario.
+ *
+ */
 @Composable
-fun PersistentBottomBar(
+fun CustomBottomBar(
     isAdmin: Boolean,
     showBottomBar: Boolean,
     selectedBottomBarIndex: Int,
@@ -12,6 +16,7 @@ fun PersistentBottomBar(
 ) {
     if (showBottomBar) {
         if (isAdmin) {
+            // Muestra la barra inferior animada para administradores.
             AdminAnimatedBottomBar(
                 show = true,
                 selectedIndex = selectedBottomBarIndex,
@@ -19,6 +24,7 @@ fun PersistentBottomBar(
                 onNavigate = onNavigate
             )
         } else {
+            // Muestra la barra inferior animada para usuarios regulares.
             AnimatedBottomBar(
                 show = true,
                 selectedIndex = selectedBottomBarIndex,

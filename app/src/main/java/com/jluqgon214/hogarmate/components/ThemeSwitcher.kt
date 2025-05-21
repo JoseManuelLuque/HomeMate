@@ -22,7 +22,13 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
-
+/**
+ * # Elementoo de UI para cambiar entre temas claro y oscuro.
+ *
+ * Es un elemeto que me encontré en YouTube y lo aprendí a usar y aproveche para mi proyecto.
+ *
+ * https://www.youtube.com/watch?v=Nvphdmi-6qc
+ */
 @Composable
 fun ThemeSwitcher(
     darkTheme: Boolean = false,

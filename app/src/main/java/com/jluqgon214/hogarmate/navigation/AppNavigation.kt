@@ -9,8 +9,8 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.jluqgon214.hogarmate.components.CustomBottomBar
 import com.jluqgon214.hogarmate.components.FAB
-import com.jluqgon214.hogarmate.components.PersistentBottomBar
 import com.jluqgon214.hogarmate.components.TopTittle
 import com.jluqgon214.hogarmate.screens.AdminScreen
 import com.jluqgon214.hogarmate.screens.HomeScreen
@@ -19,7 +19,6 @@ import com.jluqgon214.hogarmate.screens.ProfileScreen
 import com.jluqgon214.hogarmate.screens.RegisterScreen
 import com.jluqgon214.hogarmate.screens.SettingsScreen
 import com.jluqgon214.hogarmate.screens.TasksScreen
-import com.jluqgon214.hogarmate.test.TestScreen
 import com.jluqgon214.hogarmate.viewModel.AdminViewModel
 import com.jluqgon214.hogarmate.viewModel.AppViewModel
 import com.jluqgon214.hogarmate.viewModel.LoginViewModel
@@ -28,11 +27,20 @@ import com.jluqgon214.hogarmate.viewModel.RegisterViewModel
 import com.jluqgon214.hogarmate.viewModel.TasksViewModel
 import com.jluqgon214.hogarmate.viewModel.ThemeViewModel
 
+/**
+ * # Pantalla composable que define la navegación principal de la aplicación.
+ *
+ * Este componente utiliza `NavHost` para gestionar las diferentes pantallas de la aplicación,
+ * incluyendo la lógica de navegación y la configuración de los elementos de la interfaz de usuario
+ * como la barra superior, el FAB y la barra inferior.
+ *
+ * @param themeViewModel ViewModel que gestiona el tema de la aplicación.
+ */
 @Composable
 fun AppNavigation(
     themeViewModel: ThemeViewModel,
 ) {
-    // Navigation Controller
+    // Controlador de navegación
     val navController = rememberNavController()
 
     // ViewModels
@@ -51,33 +59,31 @@ fun AppNavigation(
     val isAdmin by adminViewModel.isAdmin.collectAsState()
 
     Scaffold(
-        topBar = { TopTittle(texto = textoTop) },
+        topBar = { TopTittle(texto = textoTop) }, // Barra superior con el título dinámico.
         floatingActionButton = {
             FAB(onFabClick = {
                 tasksViewModel.setShowDialog(true)
-            }, show = showFAB)
+            }, show = showFAB) // Botón de acción flotante.
         },
         bottomBar = {
             LaunchedEffect(Unit) {
-                // Comprobar si el usuario es administrador
+                // Verifica si el usuario es administrador.
                 adminViewModel.comprobarAdmin()
             }
 
-            PersistentBottomBar(
+            CustomBottomBar(
                 isAdmin = isAdmin,
                 showBottomBar = showBottomBar,
                 selectedBottomBarIndex = selectedBottomBarIndex,
                 onItemSelected = { index -> appViewModel.setSelectedBottomBarIndex(index) },
                 onNavigate = { index -> navigateToIndex(navController, index) },
-            )
+            ) // Barra inferior personalizada.
         },
     ) { contentPadding ->
+        // Configuración de las rutas de navegación.
         NavHost(navController, startDestination = "loginScreen") {
             composable("loginScreen") {
-                // Cambiar el título de la barra superior
                 appViewModel.setTextoTop("Iniciar sesión")
-
-                // Ocultar el FAB y la barra inferior
                 appViewModel.setShowFAB(false)
                 appViewModel.setShowBottomBar(false)
                 LoginScreen(loginViewModel = loginViewModel, navController = navController)
@@ -98,7 +104,6 @@ fun AppNavigation(
                 HomeScreen()
 
                 LaunchedEffect(Unit) {
-                    // Comprobar si el usuario es administrador
                     adminViewModel.comprobarAdmin()
                 }
             }
@@ -108,7 +113,11 @@ fun AppNavigation(
                 appViewModel.setShowFAB(true)
                 appViewModel.setShowBottomBar(true)
                 appViewModel.setSelectedBottomBarIndex(1)
-                TasksScreen(tasksViewModel = tasksViewModel, paddingValues = contentPadding, navController = navController)
+                TasksScreen(
+                    tasksViewModel = tasksViewModel,
+                    paddingValues = contentPadding,
+                    navController = navController
+                )
             }
 
             composable("profileScreen") {
@@ -130,7 +139,6 @@ fun AppNavigation(
                 appViewModel.setShowFAB(false)
                 appViewModel.setShowBottomBar(true)
 
-                // Forzar la actualización de la barra inferior, porque al cambiar de tema se reinicia el estado de la misma
                 adminViewModel.comprobarAdmin()
                 appViewModel.setSelectedBottomBarIndex(3)
 
@@ -148,7 +156,6 @@ fun AppNavigation(
                 appViewModel.setShowFAB(false)
                 appViewModel.setShowBottomBar(true)
                 appViewModel.setSelectedBottomBarIndex(4)
-                // Aquí puedes agregar la pantalla de administración
                 AdminScreen(
                     adminViewModel = adminViewModel,
                     paddingValues = contentPadding,
@@ -156,14 +163,16 @@ fun AppNavigation(
                     profileViewModel = profileViewModel
                 )
             }
-
-            composable("testScreen") {
-                TestScreen(tasksViewModel = tasksViewModel, paddingValues = contentPadding)
-            }
         }
     }
 }
 
+/**
+ * ### Función auxiliar para navegar a una pantalla específica según el índice seleccionado.
+ *
+ * @param navController Controlador de navegación.
+ * @param index Índice de la pantalla a la que se desea navegar.
+ */
 private fun navigateToIndex(navController: NavController, index: Int) {
     when (index) {
         0 -> navController.navigate("homeScreen") { launchSingleTop = true }

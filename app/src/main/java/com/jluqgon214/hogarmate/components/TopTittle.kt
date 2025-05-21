@@ -10,14 +10,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 
+/**
+ * # Componente de encabezado superior que muestra un título centrado.
+ *
+ * @param texto El texto que se mostrará como título.
+ */
 @Composable
 fun TopTittle(texto: String) {
     Box(
         modifier = Modifier
-            .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.primaryContainer)
-            .systemBarsPadding(),
+            .fillMaxWidth() // Ocupa todo el ancho disponible.
+            .background(MaterialTheme.colorScheme.primaryContainer) // Aplica un color de fondo basado en el tema.
+            .systemBarsPadding(), // Agrega un relleno para evitar superposición con las barras del sistema.
     ) {
-        Text(texto, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.titleLarge)
+        Text(
+            texto, // Texto a mostrar.
+            textAlign = TextAlign.Center, // Alinea el texto al centro.
+            modifier = Modifier.fillMaxWidth(), // El texto ocupa todo el ancho disponible.
+            style = MaterialTheme.typography.titleLarge // Aplica un estilo de texto grande basado en el tema.
+        )
     }
 }
