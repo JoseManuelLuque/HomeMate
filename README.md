@@ -1,8 +1,4 @@
----
-icon: house-chimney-user
----
-
-# HomeMate
+# 🏠HomeMate - La mejor app de gestión de tareas del hogar
 
 ## 📚 Índice
 
