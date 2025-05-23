@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>ApiService</title>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../";</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/jetbrains-mono.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+<div class="navigation-wrapper" id="navigation-wrapper">
+    <div id="leftToggler"><span class="icon-toggler"></span></div>
+    <div class="library-name">
+            <a href="../../../index.html">
+                    <span>app</span>
+            </a>
+    </div>
+    <div>
+    </div>
+    <div class="pull-right d-flex">
+        <div class="filter-section" id="filter-section">
+                <button class="platform-tag platform-selector jvm-like" data-active="" data-filter=":app:dokkaHtml/release">androidJvm</button>
+        </div>
+        <button id="theme-toggle-button"><span id="theme-toggle"></span></button>
+        <div id="searchBar"></div>
+    </div>
+</div>
+<div id="container">
+    <div id="leftColumn">
+        <div id="sideMenu"></div>
+    </div>
+    <div id="main">
+<div class="main-content" data-page-type="classlike" id="content" pageIds="app::com.jluqgon214.hogarmate.service/ApiService///PointingToDeclaration//492899073">
+  <div class="breadcrumbs"><a href="../../../index.html">app</a><span class="delimiter">/</span><a href="../index.html">com.jluqgon214.hogarmate.service</a><span class="delimiter">/</span><span class="current">ApiService</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Api</span><wbr></wbr><span><span>Service</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":app:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">interface </span><a href="index.html">ApiService</a></div><h1 class="">Interfaz que define los endpoints de la API REST.</h1><p class="paragraph">Contiene las funciones que se utilizarán para realizar las peticiones a la API.</p></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="FUNCTION">
+        <h2 class="">Functions</h2>
+        <div class="table"><a data-name="-921161345%2FFunctions%2F492899073" anchor-label="actualizarEstadoTarea" id="-921161345%2FFunctions%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":app:dokkaHtml/release" data-filterable-set=":app:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="actualizar-estado-tarea.html"><span>actualizar</span><wbr></wbr><span>Estado</span><wbr></wbr><span><span>Tarea</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-921161345%2FFunctions%2F492899073"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":app:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="retrofit2.http/PUT///PointingToDeclaration/"><span class="token annotation builtin">PUT</span></span><span class="token punctuation">(</span><span>value<span class="token operator"> = </span><span class="breakable-word"><span class="token string">&quot;/tareas/update/status/{id}&quot;</span></span></span><wbr></wbr><span class="token punctuation">)</span></div></div><span class="token keyword">abstract </span><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="actualizar-estado-tarea.html"><span class="token function">actualizarEstadoTarea</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span><span class="token annotation builtin">@</span><span data-unresolved-link="retrofit2.http/Path///PointingToDeclaration/"><span class="token annotation builtin">Path</span></span><span class="token punctuation">(</span><span>value<span class="token operator"> = </span><span class="breakable-word"><span class="token string">&quot;id&quot;</span></span></span><wbr></wbr><span class="token punctuation">)</span> </span>id<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="retrofit2/Call///PointingToDeclaration/">Call</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../com.jluqgon214.hogarmate.model/-tarea/index.html">Tarea</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-137812848%2FFunctions%2F492899073" anchor-label="actualizarUsuario" id="-137812848%2FFunctions%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":app:dokkaHtml/release" data-filterable-set=":app:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="actualizar-usuario.html"><span>actualizar</span><wbr></wbr><span><span>Usuario</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-137812848%2FFunctions%2F492899073"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":app:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="retrofit2.http/PUT///PointingToDeclaration/"><span class="token annotation builtin">PUT</span></span><span class="token punctuation">(</span><span>value<span class="token operator"> = </span><span class="breakable-word"><span class="token string">&quot;/usuarios/update&quot;</span></span></span><wbr></wbr><span class="token punctuation">)</span></div></div><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="actualizar-usuario.html"><span class="token function">actualizarUsuario</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span><span class="token annotation builtin">@</span><span data-unresolved-link="retrofit2.http/Body///PointingToDeclaration/"><span class="token annotation builtin">Body</span></span> </span>usuario<span class="token operator">: </span><a href="../../com.jluqgon214.hogarmate.model/-usuario/index.html">Usuario</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="retrofit2/Call///PointingToDeclaration/">Call</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../com.jluqgon214.hogarmate.model/-usuario/index.html">Usuario</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-11205753%2FFunctions%2F492899073" anchor-label="comprobarAdmin" id="-11205753%2FFunctions%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":app:dokkaHtml/release" data-filterable-set=":app:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="comprobar-admin.html"><span>comprobar</span><wbr></wbr><span><span>Admin</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-11205753%2FFunctions%2F492899073"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":app:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="retrofit2.http/GET///PointingToDeclaration/"><span class="token annotation builtin">GET</span></span><span class="token punctuation">(</span><span>value<span class="token operator"> = </span><span class="breakable-word"><span class="token string">&quot;/usuarios/admin&quot;</span></span></span><wbr></wbr><span class="token punctuation">)</span></div></div><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="comprobar-admin.html"><span class="token function">comprobarAdmin</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="retrofit2/Call///PointingToDeclaration/">Call</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1847427408%2FFunctions%2F492899073" anchor-label="crearTarea" id="-1847427408%2FFunctions%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":app:dokkaHtml/release" data-filterable-set=":app:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="crear-tarea.html"><span>crear</span><wbr></wbr><span><span>Tarea</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1847427408%2FFunctions%2F492899073"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":app:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="retrofit2.http/POST///PointingToDeclaration/"><span class="token annotation builtin">POST</span></span><span class="token punctuation">(</span><span>value<span class="token operator"> = </span><span class="breakable-word"><span class="token string">&quot;/tareas/crear&quot;</span></span></span><wbr></wbr><span class="token punctuation">)</span></div></div><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="crear-tarea.html"><span class="token function">crearTarea</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span><span class="token annotation builtin">@</span><span data-unresolved-link="retrofit2.http/Body///PointingToDeclaration/"><span class="token annotation builtin">Body</span></span> </span>tarea<span class="token operator">: </span><a href="../../com.jluqgon214.hogarmate.model.DTO/-crear-tarea-d-t-o/index.html">CrearTareaDTO</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="retrofit2/Call///PointingToDeclaration/">Call</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../com.jluqgon214.hogarmate.model/-tarea/index.html">Tarea</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1530084516%2FFunctions%2F492899073" anchor-label="crearTareaUsuario" id="1530084516%2FFunctions%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":app:dokkaHtml/release" data-filterable-set=":app:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="crear-tarea-usuario.html"><span>crear</span><wbr></wbr><span>Tarea</span><wbr></wbr><span><span>Usuario</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1530084516%2FFunctions%2F492899073"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":app:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="retrofit2.http/POST///PointingToDeclaration/"><span class="token annotation builtin">POST</span></span><span class="token punctuation">(</span><span>value<span class="token operator"> = </span><span class="breakable-word"><span class="token string">&quot;/tareas/crear/usuario/{idUsuario}&quot;</span></span></span><wbr></wbr><span class="token punctuation">)</span></div></div><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="crear-tarea-usuario.html"><span class="token function">crearTareaUsuario</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span><span class="token annotation builtin">@</span><span data-unresolved-link="retrofit2.http/Path///PointingToDeclaration/"><span class="token annotation builtin">Path</span></span><span class="token punctuation">(</span><span>value<span class="token operator"> = </span><span class="breakable-word"><span class="token string">&quot;idUsuario&quot;</span></span></span><wbr></wbr><span class="token punctuation">)</span> </span>idUsuario<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token punctuation">, </span></span><span class="parameter "><span><span class="token annotation builtin">@</span><span data-unresolved-link="retrofit2.http/Body///PointingToDeclaration/"><span class="token annotation builtin">Body</span></span> </span>tarea<span class="token operator">: </span><a href="../../com.jluqgon214.hogarmate.model.DTO/-crear-tarea-d-t-o/index.html">CrearTareaDTO</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="retrofit2/Call///PointingToDeclaration/">Call</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../com.jluqgon214.hogarmate.model/-tarea/index.html">Tarea</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-2068817814%2FFunctions%2F492899073" anchor-label="eliminarTarea" id="-2068817814%2FFunctions%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":app:dokkaHtml/release" data-filterable-set=":app:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="eliminar-tarea.html"><span>eliminar</span><wbr></wbr><span><span>Tarea</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2068817814%2FFunctions%2F492899073"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":app:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="retrofit2.http/DELETE///PointingToDeclaration/"><span class="token annotation builtin">DELETE</span></span><span class="token punctuation">(</span><span>value<span class="token operator"> = </span><span class="breakable-word"><span class="token string">&quot;/tareas/delete/{id}&quot;</span></span></span><wbr></wbr><span class="token punctuation">)</span></div></div><span class="token keyword">abstract </span><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="eliminar-tarea.html"><span class="token function">eliminarTarea</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span><span class="token annotation builtin">@</span><span data-unresolved-link="retrofit2.http/Path///PointingToDeclaration/"><span class="token annotation builtin">Path</span></span><span class="token punctuation">(</span><span>value<span class="token operator"> = </span><span class="breakable-word"><span class="token string">&quot;id&quot;</span></span></span><wbr></wbr><span class="token punctuation">)</span> </span>id<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="retrofit2/Call///PointingToDeclaration/">Call</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-unit/index.html">Unit</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1577533783%2FFunctions%2F492899073" anchor-label="login" id="-1577533783%2FFunctions%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":app:dokkaHtml/release" data-filterable-set=":app:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="login.html"><span><span>login</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1577533783%2FFunctions%2F492899073"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":app:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="retrofit2.http/POST///PointingToDeclaration/"><span class="token annotation builtin">POST</span></span><span class="token punctuation">(</span><span>value<span class="token operator"> = </span><span class="breakable-word"><span class="token string">&quot;/usuarios/login&quot;</span></span></span><wbr></wbr><span class="token punctuation">)</span></div></div><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="login.html"><span class="token function">login</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span><span class="token annotation builtin">@</span><span data-unresolved-link="retrofit2.http/Body///PointingToDeclaration/"><span class="token annotation builtin">Body</span></span> </span>request<span class="token operator">: </span><a href="../../com.jluqgon214.hogarmate.model/-login-request/index.html">LoginRequest</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="retrofit2/Call///PointingToDeclaration/">Call</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../com.jluqgon214.hogarmate.model/-login-response/index.html">LoginResponse</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1379924406%2FFunctions%2F492899073" anchor-label="obtenerTareasUsuario" id="-1379924406%2FFunctions%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":app:dokkaHtml/release" data-filterable-set=":app:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="obtener-tareas-usuario.html"><span>obtener</span><wbr></wbr><span>Tareas</span><wbr></wbr><span><span>Usuario</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1379924406%2FFunctions%2F492899073"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":app:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="retrofit2.http/GET///PointingToDeclaration/"><span class="token annotation builtin">GET</span></span><span class="token punctuation">(</span><span>value<span class="token operator"> = </span><span class="breakable-word"><span class="token string">&quot;/tareas/usuario&quot;</span></span></span><wbr></wbr><span class="token punctuation">)</span></div></div><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="obtener-tareas-usuario.html"><span class="token function">obtenerTareasUsuario</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="retrofit2/Call///PointingToDeclaration/">Call</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../com.jluqgon214.hogarmate.model/-tarea/index.html">Tarea</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-207582376%2FFunctions%2F492899073" anchor-label="obtenerUsuario" id="-207582376%2FFunctions%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":app:dokkaHtml/release" data-filterable-set=":app:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="obtener-usuario.html"><span>obtener</span><wbr></wbr><span><span>Usuario</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-207582376%2FFunctions%2F492899073"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":app:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="retrofit2.http/GET///PointingToDeclaration/"><span class="token annotation builtin">GET</span></span><span class="token punctuation">(</span><span>value<span class="token operator"> = </span><span class="breakable-word"><span class="token string">&quot;/usuarios/me&quot;</span></span></span><wbr></wbr><span class="token punctuation">)</span></div></div><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="obtener-usuario.html"><span class="token function">obtenerUsuario</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="retrofit2/Call///PointingToDeclaration/">Call</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../com.jluqgon214.hogarmate.model/-usuario/index.html">Usuario</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="931826231%2FFunctions%2F492899073" anchor-label="obtenerUsuariosConTareas" id="931826231%2FFunctions%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":app:dokkaHtml/release" data-filterable-set=":app:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="obtener-usuarios-con-tareas.html"><span>obtener</span><wbr></wbr><span>Usuarios</span><wbr></wbr><span>Con</span><wbr></wbr><span><span>Tareas</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="931826231%2FFunctions%2F492899073"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":app:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="retrofit2.http/GET///PointingToDeclaration/"><span class="token annotation builtin">GET</span></span><span class="token punctuation">(</span><span>value<span class="token operator"> = </span><span class="breakable-word"><span class="token string">&quot;/usuarios/tareas&quot;</span></span></span><wbr></wbr><span class="token punctuation">)</span></div></div><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="obtener-usuarios-con-tareas.html"><span class="token function">obtenerUsuariosConTareas</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="retrofit2/Call///PointingToDeclaration/">Call</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../com.jluqgon214.hogarmate.model.DTO/-usuario-con-tareas-d-t-o/index.html">UsuarioConTareasDTO</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1007575057%2FFunctions%2F492899073" anchor-label="register" id="1007575057%2FFunctions%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":app:dokkaHtml/release" data-filterable-set=":app:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="register.html"><span><span>register</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1007575057%2FFunctions%2F492899073"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":app:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="retrofit2.http/POST///PointingToDeclaration/"><span class="token annotation builtin">POST</span></span><span class="token punctuation">(</span><span>value<span class="token operator"> = </span><span class="breakable-word"><span class="token string">&quot;/usuarios/register&quot;</span></span></span><wbr></wbr><span class="token punctuation">)</span></div></div><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="register.html"><span class="token function">register</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span><span class="token annotation builtin">@</span><span data-unresolved-link="retrofit2.http/Body///PointingToDeclaration/"><span class="token annotation builtin">Body</span></span> </span>request<span class="token operator">: </span><a href="../../com.jluqgon214.hogarmate.model/-register-request/index.html">RegisterRequest</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="retrofit2/Call///PointingToDeclaration/">Call</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../com.jluqgon214.hogarmate.model/-register-response/index.html">RegisterResponse</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2025 Copyright</span><span
+                class="pull-right"><span>Generated by </span><a
+                href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+    </div>
+</div>
+</body>
+</html>

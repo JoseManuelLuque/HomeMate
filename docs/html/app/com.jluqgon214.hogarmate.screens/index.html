@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>com.jluqgon214.hogarmate.screens</title>
+    <link href="../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../";</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../styles/style.css" rel="Stylesheet">
+<link href="../../styles/jetbrains-mono.css" rel="Stylesheet">
+<link href="../../styles/main.css" rel="Stylesheet">
+<link href="../../styles/prism.css" rel="Stylesheet">
+<link href="../../styles/logo-styles.css" rel="Stylesheet">
+<script type="text/javascript" src="../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+<div class="navigation-wrapper" id="navigation-wrapper">
+    <div id="leftToggler"><span class="icon-toggler"></span></div>
+    <div class="library-name">
+            <a href="../../index.html">
+                    <span>app</span>
+            </a>
+    </div>
+    <div>
+    </div>
+    <div class="pull-right d-flex">
+        <div class="filter-section" id="filter-section">
+                <button class="platform-tag platform-selector jvm-like" data-active="" data-filter=":app:dokkaHtml/release">androidJvm</button>
+        </div>
+        <button id="theme-toggle-button"><span id="theme-toggle"></span></button>
+        <div id="searchBar"></div>
+    </div>
+</div>
+<div id="container">
+    <div id="leftColumn">
+        <div id="sideMenu"></div>
+    </div>
+    <div id="main">
+<div class="main-content" data-page-type="package" id="content" pageIds="app::com.jluqgon214.hogarmate.screens////PointingToDeclaration//492899073">
+  <div class="breadcrumbs"><a href="../../index.html">app</a><span class="delimiter">/</span><span class="current">com.jluqgon214.hogarmate.screens</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span><span>Package-level</span></span> <span><span>declarations</span></span></h1>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="FUNCTION,EXTENSION_FUNCTION">Functions</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="FUNCTION">
+        <h2 class="">Functions</h2>
+        <div class="table"><a data-name="1060418949%2FFunctions%2F492899073" anchor-label="AdminScreen" id="1060418949%2FFunctions%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":app:dokkaHtml/release" data-filterable-set=":app:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-admin-screen.html"><span>Admin</span><wbr></wbr><span><span>Screen</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1060418949%2FFunctions%2F492899073"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":app:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span class="token annotation builtin">Composable</span></a></div></div><span class="token keyword"></span><span class="token keyword">fun </span><a href="-admin-screen.html"><span class="token function">AdminScreen</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">adminViewModel<span class="token operator">: </span><a href="../com.jluqgon214.hogarmate.viewModel/-admin-view-model/index.html">AdminViewModel</a><span class="token punctuation">, </span></span><span class="parameter ">paddingValues<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/foundation/layout/PaddingValues.html">PaddingValues</a><span class="token punctuation">, </span></span><span class="parameter ">tasksViewModel<span class="token operator">: </span><a href="../com.jluqgon214.hogarmate.viewModel/-tasks-view-model/index.html">TasksViewModel</a><span class="token punctuation">, </span></span><span class="parameter ">profileViewModel<span class="token operator">: </span><a href="../com.jluqgon214.hogarmate.viewModel/-profile-view-model/index.html">ProfileViewModel</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Esta pantalla permite a un administrador gestionar usuarios y sus tareas asociadas. Incluye un diálogo para añadir tareas, un indicador de carga y una lista de usuarios con sus tareas.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="98553399%2FFunctions%2F492899073" anchor-label="HomeScreen" id="98553399%2FFunctions%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":app:dokkaHtml/release" data-filterable-set=":app:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-home-screen.html"><span>Home</span><wbr></wbr><span><span>Screen</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="98553399%2FFunctions%2F492899073"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":app:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span class="token annotation builtin">Composable</span></a></div></div><span class="token keyword"></span><span class="token keyword">fun </span><a href="-home-screen.html"><span class="token function">HomeScreen</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Esta pantalla muestra un diseño centrado con un texto de marcador de posición. Es un componente en desarrollo (Work In Progress - WIP).</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1698074873%2FFunctions%2F492899073" anchor-label="LoginScreen" id="-1698074873%2FFunctions%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":app:dokkaHtml/release" data-filterable-set=":app:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-login-screen.html"><span>Login</span><wbr></wbr><span><span>Screen</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1698074873%2FFunctions%2F492899073"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":app:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span class="token annotation builtin">Composable</span></a></div></div><span class="token keyword"></span><span class="token keyword">fun </span><a href="-login-screen.html"><span class="token function">LoginScreen</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">loginViewModel<span class="token operator">: </span><a href="../com.jluqgon214.hogarmate.viewModel/-login-view-model/index.html">LoginViewModel</a><span class="token punctuation">, </span></span><span class="parameter ">navController<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/navigation/NavController.html">NavController</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Esta pantalla permite al usuario iniciar sesión proporcionando su correo electrónico y contraseña. También incluye un botón para navegar a la pantalla de registro.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="415462051%2FFunctions%2F492899073" anchor-label="ProfileScreen" id="415462051%2FFunctions%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":app:dokkaHtml/release" data-filterable-set=":app:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-profile-screen.html"><span>Profile</span><wbr></wbr><span><span>Screen</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="415462051%2FFunctions%2F492899073"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":app:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span class="token annotation builtin">Composable</span></a></div></div><span class="token keyword"></span><span class="token keyword">fun </span><a href="-profile-screen.html"><span class="token function">ProfileScreen</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">navController<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/navigation/NavController.html">NavController</a><span class="token punctuation">, </span></span><span class="parameter ">loginViewModel<span class="token operator">: </span><a href="../com.jluqgon214.hogarmate.viewModel/-login-view-model/index.html">LoginViewModel</a><span class="token punctuation">, </span></span><span class="parameter ">AppViewModel<span class="token operator">: </span><a href="../com.jluqgon214.hogarmate.viewModel/-app-view-model/index.html">AppViewModel</a><span class="token punctuation">, </span></span><span class="parameter ">profileViewModel<span class="token operator">: </span><a href="../com.jluqgon214.hogarmate.viewModel/-profile-view-model/index.html">ProfileViewModel</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Esta pantalla muestra la información del perfil del usuario, como su nombre y correo electrónico. También permite al usuario editar su perfil o cerrar sesión.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1469629441%2FFunctions%2F492899073" anchor-label="RegisterScreen" id="1469629441%2FFunctions%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":app:dokkaHtml/release" data-filterable-set=":app:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-register-screen.html"><span>Register</span><wbr></wbr><span><span>Screen</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1469629441%2FFunctions%2F492899073"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":app:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span class="token annotation builtin">Composable</span></a></div></div><span class="token keyword"></span><span class="token keyword">fun </span><a href="-register-screen.html"><span class="token function">RegisterScreen</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">registerViewModel<span class="token operator">: </span><a href="../com.jluqgon214.hogarmate.viewModel/-register-view-model/index.html">RegisterViewModel</a><span class="token punctuation">, </span></span><span class="parameter ">navController<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/navigation/NavController.html">NavController</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Esta pantalla permite a los usuarios registrarse proporcionando un nombre de usuario, correo electrónico y contraseña. También incluye validación de contraseñas y muestra mensajes de error o éxito.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="697972211%2FFunctions%2F492899073" anchor-label="SettingsScreen" id="697972211%2FFunctions%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":app:dokkaHtml/release" data-filterable-set=":app:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-settings-screen.html"><span>Settings</span><wbr></wbr><span><span>Screen</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="697972211%2FFunctions%2F492899073"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":app:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span class="token annotation builtin">Composable</span></a></div></div><span class="token keyword"></span><span class="token keyword">fun </span><a href="-settings-screen.html"><span class="token function">SettingsScreen</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">themeViewModel<span class="token operator">: </span><a href="../com.jluqgon214.hogarmate.viewModel/-theme-view-model/index.html">ThemeViewModel</a><span class="token punctuation">, </span></span><span class="parameter ">paddingValues<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/foundation/layout/PaddingValues.html">PaddingValues</a><span class="token punctuation">, </span></span><span class="parameter ">navController<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/navigation/NavController.html">NavController</a><span class="token punctuation">, </span></span><span class="parameter ">appViewModel<span class="token operator">: </span><a href="../com.jluqgon214.hogarmate.viewModel/-app-view-model/index.html">AppViewModel</a><span class="token punctuation">, </span></span><span class="parameter ">adminViewModel<span class="token operator">: </span><a href="../com.jluqgon214.hogarmate.viewModel/-admin-view-model/index.html">AdminViewModel</a></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-69009513%2FFunctions%2F492899073" anchor-label="TasksScreen" id="-69009513%2FFunctions%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":app:dokkaHtml/release" data-filterable-set=":app:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-tasks-screen.html"><span>Tasks</span><wbr></wbr><span><span>Screen</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-69009513%2FFunctions%2F492899073"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":app:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span class="token annotation builtin">Composable</span></a></div></div><span class="token keyword"></span><span class="token keyword">fun </span><a href="-tasks-screen.html"><span class="token function">TasksScreen</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">tasksViewModel<span class="token operator">: </span><a href="../com.jluqgon214.hogarmate.viewModel/-tasks-view-model/index.html">TasksViewModel</a><span class="token punctuation">, </span></span><span class="parameter ">paddingValues<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/foundation/layout/PaddingValues.html">PaddingValues</a><span class="token punctuation">, </span></span><span class="parameter ">navController<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/navigation/NavController.html">NavController</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Esta pantalla muestra las tareas pendientes y completadas del usuario. Permite realizar acciones como actualizar el estado de una tarea, eliminarla o añadir nuevas tareas mediante un diálogo. También incluye funcionalidad de &quot;pull-to-refresh&quot; para recargar las tareas.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2025 Copyright</span><span
+                class="pull-right"><span>Generated by </span><a
+                href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+    </div>
+</div>
+</body>
+</html>
