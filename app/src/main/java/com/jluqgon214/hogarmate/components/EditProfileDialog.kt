@@ -14,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.jluqgon214.hogarmate.viewModel.ProfileViewModel
-
 /**
  * # Diálogo de edición de perfil.
  *
@@ -38,12 +37,25 @@ fun EditProfileDialog(
     val username = profileViewModel.username.collectAsState().value
     val email = profileViewModel.email.collectAsState().value
 
+    val errorMessage = profileViewModel.errorMessage.collectAsState().value
+    val isFormValid = profileViewModel.isFormValid()
+
     AlertDialog(
         onDismissRequest = { profileViewModel.setShowEditDialog(false) }, // Acción al cerrar el diálogo.
         title = {
             Text(text = "Editar Perfil")
         },
         text = {
+            Column {
+                if (errorMessage != null) {
+                    Text(
+                        text = errorMessage,
+                        color = Color.Red,
+                        style = MaterialTheme.typography.bodySmall,
+                        modifier = Modifier.padding(bottom = 8.dp)
+                    )
+                }
+            }
             Column {
                 // Campo de texto para editar el nombre de usuario.
                 CustomTextField(
@@ -74,6 +86,7 @@ fun EditProfileDialog(
                 },
                 text = "Guardar",
                 textColor = MaterialTheme.colorScheme.primary,
+                enabled = isFormValid // Hasta que el formulario sea válido, el botón estará habilitado.
             )
         },
         dismissButton = {

@@ -123,6 +123,19 @@ class ProfileViewModel : ViewModel() {
      * la operación es exitosa o `_errorMessage` en caso de error.
      */
     fun actualizarUsuario() {
+        val username = _username.value.trim() //trim patra eliminar espacios
+        val email = _email.value.trim()
+
+        // Validación local antes de llamar a la API
+        if (username.isEmpty() || email.isEmpty()) {
+            _errorMessage.value = "Se deben rellenar todos los campos"
+            return
+        }
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            _errorMessage.value = "El email no es válido"
+            return
+        }
+
         viewModelScope.launch {
             try {
                 // Crear un objeto Usuario con los datos actualizados
@@ -157,5 +170,20 @@ class ProfileViewModel : ViewModel() {
                 Log.e("ProfileViewModel", "Error de red: ${e.message}")
             }
         }
+    }
+
+    /**
+     * ### Verifica si el formulario de edición es válido.
+     *
+     * Comprueba si el nombre de usuario y el correo electrónico son válidos.
+     *
+     * @return `true` si el formulario es válido, `false` en caso contrario.
+     */
+    fun isFormValid(): Boolean {
+        val username = _username.value.trim()
+        val email = _email.value.trim()
+        return username.isNotEmpty() &&
+                email.isNotEmpty() &&
+                android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 }
