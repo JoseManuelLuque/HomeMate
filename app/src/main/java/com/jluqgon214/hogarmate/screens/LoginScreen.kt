@@ -3,9 +3,12 @@ package com.jluqgon214.hogarmate.screens
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -27,7 +30,7 @@ import com.jluqgon214.hogarmate.viewModel.LoginViewModel
  * # Pantalla de inicio de sesión.
  *
  * Esta pantalla permite al usuario iniciar sesión proporcionando su correo electrónico y contraseña.
- * También incluye un botón para navegar a la pantalla de registro.
+ * También incluye un botón para navegar a la pantalla de registro y muestra mensajes de error o carga.
  *
  * @param loginViewModel ViewModel que gestiona la lógica de inicio de sesión.
  * @param navController Controlador de navegación para gestionar la navegación entre pantallas.
@@ -44,10 +47,10 @@ fun LoginScreen(loginViewModel: LoginViewModel, navController: NavController) {
     // Contenedor principal de la pantalla.
     Column(
         modifier = Modifier
-            .padding(16.dp)
+            .padding(24.dp)
             .fillMaxSize(),
-        verticalArrangement = Arrangement.Center, // Centra los elementos verticalmente.
-        horizontalAlignment = Alignment.CenterHorizontally // Centra los elementos horizontalmente.
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         // Muestra un mensaje de error si existe.
         errorMessage?.let {
@@ -61,6 +64,7 @@ fun LoginScreen(loginViewModel: LoginViewModel, navController: NavController) {
             label = "Correo Electrónico",
             placeholder = "Escribe tu correo"
         )
+        Spacer(modifier = Modifier.height(16.dp))
 
         // Campo de texto para la contraseña.
         CustomTextField(
@@ -69,13 +73,14 @@ fun LoginScreen(loginViewModel: LoginViewModel, navController: NavController) {
             label = "Contraseña",
             placeholder = "Escribe tu contraseña"
         )
+        Spacer(modifier = Modifier.height(24.dp))
 
-        // Fila con botones para iniciar sesión y registrarse.
+        // Fila con botones para iniciar sesión y registrarse, separados y con padding horizontal.
         Row(
             modifier = Modifier
-                .padding(16.dp)
+                .padding(horizontal = 8.dp)
                 .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween // Espacia los botones uniformemente.
+            horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             // Botón para iniciar sesión.
             CustomButton(
@@ -96,15 +101,11 @@ fun LoginScreen(loginViewModel: LoginViewModel, navController: NavController) {
                     }
                 }
             )
-
+            Spacer(modifier = Modifier.width(16.dp))
             // Botón para navegar a la pantalla de registro.
             CustomButton(
-                onClick = {
-                    navController.navigate("registerScreen")
-                },
-                content = {
-                    Text("Registrarse")
-                }
+                onClick = { navController.navigate("registerScreen") },
+                content = { Text("Registrarse") }
             )
         }
     }
@@ -114,10 +115,8 @@ fun LoginScreen(loginViewModel: LoginViewModel, navController: NavController) {
         if (loginCorrecto) {
             // Guarda el token JWT para su uso posterior.
             loginViewModel.setJWT(loginViewModel.loginResponse.value?.token)
-
             // Limpia el historial de navegación para evitar volver a la pantalla de inicio de sesión.
             navController.popBackStack()
-
             // Navega a la pantalla principal.
             navController.navigate("homeScreen")
         }

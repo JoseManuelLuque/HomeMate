@@ -3,8 +3,12 @@ package com.jluqgon214.hogarmate.screens
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -40,10 +44,10 @@ fun RegisterScreen(registerViewModel: RegisterViewModel, navController: NavContr
     // Contenedor principal de la pantalla.
     Column(
         modifier = Modifier
-            .padding(16.dp)
+            .padding(24.dp)
             .fillMaxSize(),
-        verticalArrangement = Arrangement.Center, // Centra los elementos verticalmente.
-        horizontalAlignment = Alignment.CenterHorizontally // Centra los elementos horizontalmente.
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         // Muestra un mensaje de éxito si el registro fue exitoso.
         registerResponse?.let {
@@ -63,6 +67,7 @@ fun RegisterScreen(registerViewModel: RegisterViewModel, navController: NavContr
             label = "Usuario",
             placeholder = "Escribe tu usuario"
         )
+        Spacer(modifier = Modifier.height(16.dp))
 
         // Campo de texto para el correo electrónico.
         CustomTextField(
@@ -71,6 +76,7 @@ fun RegisterScreen(registerViewModel: RegisterViewModel, navController: NavContr
             label = "Email",
             placeholder = "Escribe tu Email"
         )
+        Spacer(modifier = Modifier.height(16.dp))
 
         // Campo de texto para la contraseña.
         CustomTextField(
@@ -79,6 +85,7 @@ fun RegisterScreen(registerViewModel: RegisterViewModel, navController: NavContr
             label = "Contraseña",
             placeholder = "Escribe tu contraseña"
         )
+        Spacer(modifier = Modifier.height(16.dp))
 
         // Campo de texto para repetir la contraseña.
         CustomTextField(
@@ -87,23 +94,25 @@ fun RegisterScreen(registerViewModel: RegisterViewModel, navController: NavContr
             label = "Repite tu Contraseña",
             placeholder = "Escribe tu contraseña de nuevo"
         )
+        Spacer(modifier = Modifier.height(24.dp))
 
-        // Fila con botones para volver y registrarse.
-        Row {
+        // Fila con botones para volver y registrarse, separados y con padding horizontal.
+        Row(
+            modifier = Modifier
+                .padding(horizontal = 8.dp)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
             // Botón para volver a la pantalla de inicio de sesión.
             CustomButton(
                 content = { Text("Volver") },
-                onClick = {
-                    navController.navigate("loginScreen")
-                }
+                onClick = { navController.navigate("loginScreen") }
             )
-
+            Spacer(modifier = Modifier.width(16.dp))
             // Botón para realizar el registro.
             CustomButton(
                 content = { Text("Registrarse") },
-                onClick = {
-                    registerViewModel.register()
-                }
+                onClick = { registerViewModel.register() }
             )
         }
     }

@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,13 +27,12 @@ import com.jluqgon214.hogarmate.viewModel.ProfileViewModel
 /**
  * # Pantalla de perfil del usuario.
  *
- * Esta pantalla muestra la información del perfil del usuario, como su nombre y correo electrónico.
- * También permite al usuario editar su perfil o cerrar sesión.
+ * Muestra la información del perfil del usuario, permitiendo editar o cerrar sesión.
  *
- * @param navController Controlador de navegación para gestionar la navegación entre pantallas.
- * @param loginViewModel ViewModel que gestiona la lógica de inicio de sesión.
- * @param AppViewModel ViewModel que gestiona el estado global de la aplicación.
- * @param profileViewModel ViewModel que gestiona la lógica del perfil del usuario.
+ * @param navController Controlador de navegación.
+ * @param loginViewModel ViewModel de inicio de sesión.
+ * @param AppViewModel ViewModel global de la app.
+ * @param profileViewModel ViewModel del perfil de usuario.
  */
 @Composable
 fun ProfileScreen(
@@ -43,75 +41,74 @@ fun ProfileScreen(
     AppViewModel: AppViewModel,
     profileViewModel: ProfileViewModel
 ) {
-    // Estado que contiene la información del usuario.
+    // Estado con la información del usuario.
     val usuario by profileViewModel.usuario.collectAsState()
-
-    // Estado que indica si el diálogo de edición de perfil está visible.
+    // Estado para mostrar el diálogo de edición.
     val showEditDialog by profileViewModel.showEditDialog.collectAsState()
 
-    // Cargar la información del usuario al iniciar la pantalla.
+    // Carga la información del usuario al iniciar la pantalla.
     LaunchedEffect(Unit) {
         Log.d("ProfileScreen", "Cargando información del usuario")
         profileViewModel.obtenerUsuario()
     }
 
-    // Muestra el diálogo de edición de perfil si está activo.
+    // Diálogo de edición de perfil.
     AnimatedVisibility(showEditDialog) {
         EditProfileDialog(profileViewModel)
     }
 
-    // Contenedor principal de la pantalla.
+    // Contenedor principal con distribución uniforme.
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.SpaceEvenly
     ) {
-        // Muestra el nombre del usuario.
-        Text("Nombre", fontSize = MaterialTheme.typography.headlineLarge.fontSize)
-        Text(
-            usuario?.username ?: "Cargando...",
-            fontSize = MaterialTheme.typography.headlineSmall.fontSize
-        )
+        // Sección: Nombre de usuario.
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Text("Nombre", fontSize = MaterialTheme.typography.headlineLarge.fontSize)
+            Text(
+                usuario?.username ?: "Cargando...",
+                fontSize = MaterialTheme.typography.headlineSmall.fontSize
+            )
+        }
 
-        // Muestra el correo electrónico del usuario.
-        Text("Correo Electrónico", fontSize = MaterialTheme.typography.headlineLarge.fontSize)
-        Text(
-            usuario?.email ?: "Cargando...",
-            fontSize = MaterialTheme.typography.headlineSmall.fontSize
-        )
+        // Sección: Correo electrónico.
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Text("Correo Electrónico", fontSize = MaterialTheme.typography.headlineLarge.fontSize)
+            Text(
+                usuario?.email ?: "Cargando...",
+                fontSize = MaterialTheme.typography.headlineSmall.fontSize
+            )
+        }
 
-        // Fila con botones para editar el perfil y cerrar sesión.
+        // Fila de botones: Editar perfil y cerrar sesión.
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .wrapContentHeight()
-                .padding(8.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
+                .padding(top = 16.dp),
+            horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            // Botón para abrir el diálogo de edición de perfil.
+            // Botón: Editar perfil.
             CustomButton(
-                onClick = {
-                    profileViewModel.setShowEditDialog(true)
-                },
+                onClick = { profileViewModel.setShowEditDialog(true) }
             ) {
                 Text("Editar Perfil")
             }
-
-            // Botón para cerrar sesión.
+            // Botón: Cerrar sesión.
             CustomButton(
                 onClick = {
                     navController.navigate("loginScreen") {
                         popUpTo("loginScreen") { inclusive = true }
                     }
-                    // Resetear el estado de inicio de sesión.
                     loginViewModel.setJWT(null)
                     loginViewModel.setLoginCorrecto(false)
                     loginViewModel.setErrorMessage(null)
                     loginViewModel.setEmail("")
                     loginViewModel.setPassword("")
-
                     AppViewModel.setSelectedBottomBarIndex(0)
-                },
+                }
             ) {
                 Text("Cerrar sesión")
             }
