@@ -1,5 +1,11 @@
 # 🏠HomeMate - La mejor app de gestión de tareas del hogar
 
+## 🌐 Link al documento original
+
+[Enlace a la pagina para ver el docuemtno original con el formato y enlaces bien](https://josemanuelluque-2dam.gitbook.io/pmdm)
+
+***
+
 ## 📚 Índice
 
 * [📄 Descripción](./#descripcion)
@@ -37,7 +43,7 @@ Próximamente en Google Play
 
 ## 🚧 Estado del desarrollo
 
-* Versión actual&#x20;
+* Versión actual
 
 `v1.0 Beta`
 
